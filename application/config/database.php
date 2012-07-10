@@ -41,10 +41,10 @@
 $active_group = ENVIRONMENT;
 $active_record = TRUE;
 
-$db['production']['hostname'] = 'localhost';
-$db['production']['username'] = '8_sam';
-$db['production']['password'] = 'vC8bFpWgX2';
-$db['production']['database'] = '8_samsonginfo2';
+$db['production']['hostname'] = get_cfg_var('zend_developer_cloud.db.host');
+$db['production']['username'] = get_cfg_var('zend_developer_cloud.db.username');
+$db['production']['password'] = get_cfg_var('zend_developer_cloud.db.password');
+$db['production']['database'] = get_cfg_var('zend_developer_cloud.db.name');
 $db['production']['dbdriver'] = 'mysql';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;
@@ -59,10 +59,10 @@ $db['production']['stricton'] = FALSE;
 
 
 // Development DB
-$db['development']['hostname'] = 'localhost';
-$db['development']['username'] = '8_sam';
-$db['development']['password'] = 'vC8bFpWgX2';
-$db['development']['database'] = '8_betasam';
+$db['development']['hostname'] = get_cfg_var('zend_developer_cloud.db.host');
+$db['development']['username'] = get_cfg_var('zend_developer_cloud.db.username');
+$db['development']['password'] = get_cfg_var('zend_developer_cloud.db.password');
+$db['development']['database'] = get_cfg_var('zend_developer_cloud.db.name');
 $db['development']['dbdriver'] = 'mysql';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
