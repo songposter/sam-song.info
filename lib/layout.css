@@ -1,0 +1,239 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: #fff;
+	margin: 20px 40px;
+	font-family: Lucida Grande, Verdana, Sans-serif;
+	font-size: 100%;
+	color: #4F5155;
+}
+
+h1 {
+	color: #767676;
+	font-size: 1.6em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin-top: 0;
+}
+
+h2 {
+	color: #767676;
+	background-color: transparent;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 5px 0 0 0;
+	margin: 0;
+}
+
+code {
+	font-family: Monaco, Verdana, Sans-serif;
+	font-size: 0.75em;
+	background-color: #f9f9f9;
+	border: 1px solid #D0D0D0;
+	color: #002166;
+	display: block;
+	margin: 14px 0 14px 0;
+	padding: 12px 10px 12px 10px;
+}
+
+fieldset * {
+	float: left;
+	margin: 0 5px;
+}
+
+fieldset p {
+	white-space: pre-line;
+	margin-bottom: 0.5em;
+	line-height: 1.2;
+	font-size: 75%;
+	font-weight: lighter;
+	font-style: italic;
+}
+
+legend {
+	color: #767676;
+	background-color: transparent;
+	font-size: 1.2em;
+	font-weight: bold;
+	float: none;
+}
+
+label {
+	max-width: 50%;
+	font-size: 0.9em;
+}
+
+fieldset.nostyle {
+	display: block;
+	border:  0 none;
+	margin-left: 0;
+	padding-left: 0;
+	width: 100%;
+}
+
+fieldset.nostyle legend {
+	float: left;
+	font-size: 100%;
+	min-width: 10%;
+}
+
+fieldset.nostyle label {
+	max-width: 90%;
+}
+
+fieldset.nostyle p {
+	margin: 0;
+}
+
+.orange {
+	color: #F27B36;
+}
+
+.twitter-blue {
+	color: #79C2CE;
+}
+
+.section {
+	margin: 24px 0 2px 0;
+	border-bottom: 4px solid #D0D0D0;
+}
+
+.radio {
+	margin-top: 2px;	
+}
+
+.collapsed > legend:after {
+	content: '  [+]';
+	font-weight: normal;
+	font-size: 0.6em;
+	letter-spacing: -2px;
+	position: relative;
+	bottom: 2px;
+}
+
+.expanded > legend:after {
+	content: ' [-]';
+	font-weight: normal;
+	font-size: 0.6em;
+	letter-spacing: -2px;
+	position: relative;
+	bottom: 2px;
+}
+
+.collapsed fieldset.nostyle {
+	display: none;	
+}
+
+.expanded fieldset.nosytle {
+	display: block;	
+}
+
+#sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	min-width: 10em;
+}
+
+#sortable li {
+	margin: 0 5px 0px 5px;
+	padding: 0 5px;
+	border: 1px dashed black;
+	cursor: move;
+}
+
+.ui-state-highlight {
+	line-height: 1.2em;
+	height: 1.2em;
+	width: 3em;
+	background-color: #767676;
+}
+
+.credits
+{
+	font-size: 0.6em;
+	text-align: center;
+}
+
+.borderless
+{
+	border: 0;
+}
+
+a,
+a:link,
+a:visited,
+a:active {
+	text-decoration: none;
+	font-style: italic;
+	font-family: Lucida Grande, Verdana, Sans-serif;
+	font-size: 100%;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.hiddenlink,
+.hiddenlink:link,
+.hiddenlink:visited,
+.hiddenlink:active {
+	color: #4F5155;
+	font-variant: small-caps;
+	text-decoration: none;
+	border-bottom: 1px dotted #4F5155;
+}
+
+.hiddenlink:hover {
+	border-bottom: 1px solid #4F5155;
+}
+
+.expandbutton,
+.expandbutton:link,
+.expandbutton:visited,
+.expandbutton:active,
+.expandbutton:hover {
+	margin: 0;
+	padding: 0;
+	color: #4F5155;
+	font-style: normal;
+	font-weight: bold;
+	text-decoration: underline;
+	line-height: 2;
+	cursor: pointer;
+}
+
+.logout,
+.logout:link,
+.logout:visited,
+.logout:active {
+	text-decoration: none;
+	font-family: Lucida Grande, Verdana, Sans-serif;
+	font-size: 100%;
+	font-weight: bold;
+	float: right;
+}
+
+.logout:hover {
+	text-decoration: underline;
+}
+
+.hidden {
+	display: none;	
+}
+
+.emphasize {
+	font-weight: bold;
+	color: #F27B36;
+}
+
+.like {
+	position: relative;
+	bottom: 7px;
+}
+
+.facepile {
+	position: relative;
+	bottom: 4px;
+}
