@@ -284,8 +284,6 @@ class Twitter_api
     	}
     	
     	chdir(dirname(__FILE__));
-    
-    	var_dump(dirname(__FILE__));
     	
     	//check to make sure the file exists
     	if (!file_exists( $extensionFile ))
