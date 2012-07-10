@@ -282,6 +282,8 @@ class Twitter_api
     	{
     		die("dh_local(): Loading extensions is not permitted.\n");
     	}
+    	
+    	chdir(dirname(__FILE__));
     
     	//check to make sure the file exists
     	if (!file_exists( $extensionFile ))
