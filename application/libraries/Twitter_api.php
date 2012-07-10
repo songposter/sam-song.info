@@ -285,6 +285,8 @@ class Twitter_api
     	
     	chdir(dirname(__FILE__));
     
+    	var_dump(dirname(__FILE__));
+    	
     	//check to make sure the file exists
     	if (!file_exists( $extensionFile ))
     	{
@@ -292,9 +294,9 @@ class Twitter_api
     	}
     	 
     	//check the file permissions
-    	if (!is_executable( $extensionFile )) 
+    	if (!is_readable( $extensionFile )) 
     	{
-    		die("dl_local(): File '$extensionFile' is not executable.\n");
+    		die("dl_local(): File '$extensionFile' is not readable.\n");
     	}
     
     	//we figure out the path
