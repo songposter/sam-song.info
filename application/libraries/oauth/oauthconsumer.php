@@ -6,6 +6,10 @@ class OAuthConsumer
 	public $secret;
 
 	function __construct($key, $secret, $callback_url=NULL) {
+		if (is_array($key)) {
+			echo "ARRAY";
+		}
+		
 		$this->key = $key;
 		$this->secret = $secret;
 		$this->callback_url = $callback_url;
