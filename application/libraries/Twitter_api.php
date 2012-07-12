@@ -25,7 +25,7 @@ class Twitter_api
         
         $this->_CI->load->library('OAuthConsumer', array($consumer_key, $consumer_secret));
         
-        echo $this->OAuthConsumer;
+        echo $this->_CI->OAuthConsumer;
         
         $this->_oauth = new OAuth($consumer_key, $consumer_secret);
         $this->_oauth->debug = true;
