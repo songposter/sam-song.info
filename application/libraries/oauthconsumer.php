@@ -12,11 +12,11 @@ class OAuthConsumer
 			if (sizeof($key) > 2) {
 				$this->callback_url = $key[2];
 			}
+		} else {		
+			$this->key = $key;
+			$this->secret = $secret;
+			$this->callback_url = $callback_url;
 		}
-		
-		$this->key = $key;
-		$this->secret = $secret;
-		$this->callback_url = $callback_url;
 	}
 
 	function __toString() {
