@@ -5,9 +5,13 @@ class OAuthConsumer
 	public $key;
 	public $secret;
 
-	function __construct($key, $secret, $callback_url=NULL) {
-		if (is_array($key)) {
-			echo "ARRAY";
+	function __construct($key, $secret='', $callback_url=NULL) {	
+		if(is_array($key)) {
+			$this->key = $key[0];
+			$this->secret = $key[1];
+			if (sizeof($key) > 2) {
+				$this->callback_url = $key[2];
+			}
 		}
 		
 		$this->key = $key;
