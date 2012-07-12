@@ -23,7 +23,7 @@ class Twitter_api
         $consumer_secret = $this->_CI->config->item('twitter_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('twitter_'.$api.'api_url');
         
-        $this->_CI->load->library('oauth/OAuthConsumer', array($consumer_key, $consumer_secret));
+        $this->_CI->load->library('oauth/OAuthConsumer', array('key' => $consumer_key, 'secret' => $consumer_secret));
         
         echo $this->_CI->OAuthConsumer;
         
