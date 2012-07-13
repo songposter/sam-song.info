@@ -14,7 +14,7 @@ class Twitter_api
      */
     public function __construct($api = '')
     {
-        $this->_CI =& get_instance();
+    	$this->_CI =& get_instance();
         $this->_CI->load->library('session');
         $this->_CI->load->config('twitter');
         $this->_CI->load->helper('url');
@@ -22,15 +22,13 @@ class Twitter_api
         $consumer_key = $this->_CI->config->item('twitter_consumer_key');
         $consumer_secret = $this->_CI->config->item('twitter_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('twitter_'.$api.'api_url');
-               
+
         if(class_exists('OAuth')) {
         	$this->_oauth = new OAuth($consumer_key, $consumer_secret);
         } else {
-        	$this->_CI->load('OAuth', array($consumer_key, $consumer_secret));
-        	$this->_oauth = $this->_CI->OAuth;
-        }
-        
-        die('LOADED TWITTER');
+        	$this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
+        	$this->_oauth = $this->_CI->oauth_api;
+       	}
         
         $this->_oauth->debug = true;
     }

@@ -189,8 +189,6 @@
 		}
 	}
 
-	die('CI');
-	
 /*
  * ------------------------------------------------------
  *  Load the Input class and sanitize globals

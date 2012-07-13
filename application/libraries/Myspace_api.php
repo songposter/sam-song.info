@@ -17,7 +17,7 @@ class Myspace_api
         $consumer_key = $this->_CI->config->item('myspace_consumer_key');
         $consumer_secret = $this->_CI->config->item('myspace_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('myspace_api_url');
-        $this->_oauth = new OAuth($consumer_key, $consumer_secret);
+        //$this->_oauth = new OAuth($consumer_key, $consumer_secret);
         $this->_oauth->debug = true;
     }
     
