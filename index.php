@@ -187,6 +187,8 @@
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
 
+die('start bootstrap');	
+	
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
