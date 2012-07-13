@@ -57,6 +57,8 @@ class OAuth
 				$this->auth_type = $parameters[4];
 			}
 		}
+		
+		die('OAUTH Loaded?!');
 	}
 	
 	public function __destruct ()
