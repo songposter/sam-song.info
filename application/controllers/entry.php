@@ -13,9 +13,7 @@ class Entry extends CI_Controller {
 	}
 
 	function index()
-	{
-		die('INDEX LOADED');
-		
+	{	
 		// OpenGraph Metadata BEGIN
 		$opengraph = 	array(
 							'type'				=> 'website',
