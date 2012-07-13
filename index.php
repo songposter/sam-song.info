@@ -186,8 +186,6 @@
 
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
-
-die('start bootstrap');	
 	
 /*
  * --------------------------------------------------------------------

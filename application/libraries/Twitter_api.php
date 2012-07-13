@@ -30,6 +30,7 @@ class Twitter_api
         	$this->_oauth = $this->_CI->OAuth;
         }
         
+        die('LOADED TWITTER');
         
         $this->_oauth->debug = true;
     }
