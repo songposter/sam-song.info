@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://dev.sam-song.info/';
+$config['base_url']	= 'http://samsong.my.phpcloud.com/';
 
 /*
 |--------------------------------------------------------------------------
