@@ -91,6 +91,7 @@ class Twitter extends CI_Controller
 		        'timing_value' => 10,
     	        'prefix' => '',
 		        'postfix' => '',
+		    	'timing' => 'WaitForTime',	
     	    );
 		}
 

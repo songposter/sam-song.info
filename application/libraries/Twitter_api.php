@@ -82,7 +82,7 @@ class Twitter_api
     {
         $token = $this->_CI->input->get('oauth_token');
         $verifier = $this->_CI->input->get('oauth_verifier');
-
+        
         if ($token === false || $verifier === false)
         {
             $this->_authorize();
@@ -178,7 +178,8 @@ class Twitter_api
      */
     private function _authorize()
     {
-        $requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
+        echo $this->_callback;
+    	$requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
         try
         {
             $requestToken = $this->_oauth->getRequestToken($requestURL, $this->_callback);
@@ -234,16 +235,17 @@ class Twitter_api
             }
             catch (OAuthException $e)
             {
-                log_message('error', 'Error in access token exchange: '.$e->getMessage());
+                var_dump($e);
+            	log_message('error', 'Error in access token exchange: '.$e->getMessage());
                 log_message('debug', $e->debugInfo);
                 log_message('debug', $e->lastResponse);
+                die();
             }
-
 
             if ($accessToken !== false && is_array($accessToken))
             {
                 $this->_CI->session->unset_userdata(array('requestToken', 'requestSecret'));
-
+                
                 $twitterSession = array
                 (
                     'tw_token' => $accessToken['oauth_token'],

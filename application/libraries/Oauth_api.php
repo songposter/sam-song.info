@@ -16,6 +16,8 @@ class Oauth_api {
 	public $debugInfo;
 	
 	
+	private $_CI;
+		
 	private $consumer_key;
 	private $consumer_secret;
 	private $token;
@@ -41,6 +43,8 @@ class Oauth_api {
 	
 	public function __construct(array $parameters = null) 
 	{	
+		$this->_CI =& get_instance();
+		$this->_CI->load->helper('array');
 		$this->consumer_key = $parameters[0];
 		$this->consumer_secret = $parameters[1];
 		$this->signature_method = new OAuthSignatureMethod_HMAC_SHA1();
@@ -99,9 +103,53 @@ class Oauth_api {
 	
 	}
 	
-	public function getAccessToken ( $access_token_url , $auth_session_handle , $verifier_token )
+	public function getAccessToken ( $access_token_url , $auth_session_handle = '' , $verifier_token = '' )
 	{
-	
+		$consumer = new OAuthConsumer($this->consumer_key, $this->consumer_secret);
+		$token = new OAuthToken($this->token, $this->token_secret);
+		
+		$parsed = parse_url($access_token_url);
+		$params = array();
+		parse_str(element('query', $parsed, ''), $params);
+		
+		$request = OAuthRequest::from_consumer_and_token($consumer, $token, $this->authmethod[$this->auth_type], $access_token_url, $params);
+		$request->sign_request($this->signature_method, $consumer, $token);
+		
+		$ch = curl_init($access_token_url);
+		
+		switch ($this->auth_type)
+		{
+			case self::OAUTH_AUTH_TYPE_AUTHORIZATION :
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array($request->to_header()));
+				curl_setopt($ch, CURLOPT_POST, TRUE);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, array('oauth_verifier' => $verifier_token));
+				break;
+					
+/*			case self::OAUTH_AUTH_TYPE_URI :
+				curl_setopt($ch, CURLOPT_URL, $request->to_url());
+				break;
+		
+			case self::OAUTH_AUTH_TYPE_FORM :
+				curl_setopt($ch, CURLOPT_POST, TRUE);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $request->to_postdata());
+				break;
+*/		
+			default:
+				break;
+		}
+		
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		
+		if (($result = curl_exec($ch)) !== FALSE)
+		{
+			return OAuthUtil::parse_parameters($result);
+		} else {
+			$oae = new OAuthException(curl_error($ch));
+			$oae->lastResponse = curl_error($ch);
+			$oae->debugInfo = curl_getinfo($ch);
+				
+			throw $oae;
+		}
 	}
 	
 	public function getCAPath ()
@@ -132,43 +180,49 @@ class Oauth_api {
 	public function getRequestToken ( $request_token_url , $callback_url = '' )
 	{
 		$consumer = new OAuthConsumer($this->consumer_key, $this->consumer_secret, $callback_url);
+		
 		$parsed = parse_url($request_token_url);
-		$params = array();
-		parse_str($parsed['query'], $params);
+		$params = array();		
+		parse_str(element('query', $parsed, ''), $params);
 	
 		$request = OAuthRequest::from_consumer_and_token($consumer, NULL, $this->authmethod[$this->auth_type], $request_token_url, $params);
 		$request->sign_request($this->signature_method, $consumer, NULL);
 	
 		$ch = curl_init($request_token_url);
-	
+		
 		switch ($this->auth_type)
 		{
-			case OAUTH_AUTH_TYPE_AUTHORIZATION :
-				curl_setopt($ch, CURLOPT_HTTPHEADER, $request->to_header());
+			case self::OAUTH_AUTH_TYPE_AUTHORIZATION :
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array($request->to_header()));
 				curl_setopt($ch, CURLOPT_POST, TRUE);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, array('oauth_callback' => $callback_url));
 				break;
-					
-			case OAUTH_AUTH_TYPE_URI :
+/*					
+			case self::OAUTH_AUTH_TYPE_URI :
 				curl_setopt($ch, CURLOPT_URL, $request->to_url());
 				break;
 	
-			case OAUTH_AUTH_TYPE_FORM :
+			case self::OAUTH_AUTH_TYPE_FORM :
 				curl_setopt($ch, CURLOPT_POST, TRUE);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $request->to_postdata());
 				break;
-	
+*/	
 			default:
 				break;
 		}
 	
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	
-		if ($result = curl_exec($ch))
+		if (($result = curl_exec($ch)) !== FALSE) 
 		{
-			print_r($result);
-			//TODO Parse $result
-		}
-	
+			return OAuthUtil::parse_parameters($result);
+		} else {
+			$oae = new OAuthException(curl_error($ch));
+			$oae->lastResponse = curl_error($ch);
+			$oae->debugInfo = curl_getinfo($ch);
+			
+			throw $oae;
+		}	
 	}
 	
 	public function setAuthType ( $auth_type )
@@ -219,7 +273,8 @@ class Oauth_api {
 }
 
 class OAuthException extends Exception {
-	// pass
+	public $debugInfo;
+	public $lastResponse;
 }
 
 class OAuthConsumer {
