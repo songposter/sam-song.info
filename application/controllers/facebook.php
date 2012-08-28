@@ -216,9 +216,10 @@ class Facebook extends CI_Controller {
 		}
 
 		$userid = $fbResponse->id;
+		$username = $fbResponse->username;
 
 		$user = new stdClass();
-		$user->name = 'Personal Account (ID: '.$userid.')';
+		$user->name = 'Personal ('.$username.' - ID: '.$userid.')';
 		$user->access_token = $this->facebook_api->get_token();
         $user->expires = $this->facebook_api->get_expiry();
 
@@ -289,6 +290,9 @@ class Facebook extends CI_Controller {
 		{
 		    $data['accounts'] = array($user);
 		}
+		
+		$data['userid'] = $userid;
+		$data['username'] = $username;
 
 		// Validate settings
 		// FAIL => Display errors on settings page (default)
@@ -296,9 +300,7 @@ class Facebook extends CI_Controller {
 		{
 			$data['base'] = $this->config->item('base_url');
 			$this->load->view('facebook_settings', $data);
-			print_r($data);
-			
-			$this->load->view('footer');
+			$this->load->view('footer', $data);
 		}
 		// SUCCESS => save changes to db, load EVERYTHING from db and generate PAL
 		else

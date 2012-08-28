@@ -29,8 +29,10 @@ DROP TABLE IF EXISTS `facebook`;
 CREATE TABLE IF NOT EXISTS `facebook` (
   `ID` bigint(20) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
+  `expires` int(11) NOT NULL,
   `ispage` tinyint(1) NOT NULL DEFAULT '0',
   `use_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `songtypes` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `timing` enum('WaitForTime','WaitForPlayCount') COLLATE utf8_unicode_ci NOT NULL,
   `timing_value` int(3) NOT NULL,

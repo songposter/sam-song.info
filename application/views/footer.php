@@ -17,8 +17,10 @@
 				<fieldset class="nostyle">
 					<input type="hidden" name="cmd" value="_s-xclick" />
 					<input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" />
-				    <input type="hidden" name="item_name" value="USER">  
-				    <input type="hidden" name="item_number" value="ID">  
+			    <?php if (isset($username) && isset($userid)): ?>
+			    	<input type="hidden" name="item_name" value="<?php echo $username?>">  
+			    	<input type="hidden" name="item_number" value="<?php echo $userid?>">
+			    <?php endif;?>  
 					<input type="image" src="<?php echo $base?>images/donate_32.png"  name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen mit PayPal." />
 					<img alt="" src="https://www.paypalobjects.com/WEBSCR-640-20110401-1/de_DE/i/scr/pixel.gif" width="1" height="1" />
 				</fieldset>
