@@ -293,7 +293,7 @@ class Facebook extends CI_Controller {
 		
 		$data['userid'] = $userid;
 		$data['username'] = $username;
-		$data['locale'] = substr($fbResponse->locale, 0, 2);
+		$data['locale'] = substr($fbResponse->locale, 3, 2);
 
 		// Validate settings
 		// FAIL => Display errors on settings page (default)
