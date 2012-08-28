@@ -13,7 +13,7 @@
 				Any donation of 5 EUR (~7.50 USD / ~7.00 CAD) or more qualifies for this feature.<br />
 				Please make sure to include your facebook Id as comment. (Copy profile link from your wall)
 			</p>
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 				<fieldset class="nostyle">
 					<input type="hidden" name="cmd" value="_s-xclick" />
 					<input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" />

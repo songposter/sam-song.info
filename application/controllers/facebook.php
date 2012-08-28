@@ -311,6 +311,16 @@ class Facebook extends CI_Controller {
 			$this->_pal($data);
 		}
 	}
+	
+	/**
+	 * Process Instant Payment Notifications by PayPal
+	 * Auto-enables Page Posting for PayPal Payments greater than 5 EUR
+	 */
+
+	public function ipn()
+	{
+		
+	}
 
 	/**
 	 * Deauthorize callback when user removed App from account
