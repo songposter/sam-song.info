@@ -13,11 +13,12 @@
 				Any donation of 5 EUR (~7.50 USD / ~7.00 CAD) or more qualifies for this feature.<br />
 				Please make sure to include your facebook Id as comment. (Copy profile link from your wall)
 			</p>
-			<span id="fbuserid"></span>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 				<fieldset class="nostyle">
 					<input type="hidden" name="cmd" value="_s-xclick" />
 					<input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" />
+				    <input type="hidden" name="item_name" value="USER">  
+				    <input type="hidden" name="item_number" value="ID">  
 					<input type="image" src="<?php echo $base?>images/donate_32.png"  name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen mit PayPal." />
 					<img alt="" src="https://www.paypalobjects.com/WEBSCR-640-20110401-1/de_DE/i/scr/pixel.gif" width="1" height="1" />
 				</fieldset>

@@ -295,6 +295,8 @@ class Facebook extends CI_Controller {
 		{
 			$data['base'] = $this->config->item('base_url');
 			$this->load->view('facebook_settings', $data);
+			print_r($data);
+			
 			$this->load->view('footer');
 		}
 		// SUCCESS => save changes to db, load EVERYTHING from db and generate PAL
