@@ -15,17 +15,15 @@
 			</p>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 				<fieldset class="nostyle">
-					<input type="hidden" name="cmd" value="_donations" />
-					<input type="hidden" name="business" value="mastacheata@unitybox.de" />
-					<input type="hidden" name="currency_code" value="EUR" />
-					
+					<input type="hidden" name="cmd" value="_s-xclick" />
+					<input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" />
 			    <?php if (isset($username) && isset($userid) && isset($locale)): ?>
 			    	<input type="hidden" name="item_name" value="<?php echo $username?>">  
 			    	<input type="hidden" name="item_number" value="<?php echo $userid?>">
 			    	<input type="hidden" name="lc" value="<?php echo $locale?>">
 			    <?php endif;?>  
 					<input type="image" src="<?php echo $base?>images/donate_32.png"  name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen mit PayPal." />
-					<img alt="" src="https://www.paypal.com/de_DE/i/scr/pixel.gif" width="1" height="1" />
+					<img alt="" src="https://www.paypalobjects.com/WEBSCR-640-20110401-1/de_DE/i/scr/pixel.gif" width="1" height="1" />
 				</fieldset>
 			</form>
 		</div>
