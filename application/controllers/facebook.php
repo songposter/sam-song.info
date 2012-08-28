@@ -216,7 +216,6 @@ class Facebook extends CI_Controller {
 		}
 
 		$userid = $fbResponse->id;
-		$username = $fbResponse->username;
 
 		$user = new stdClass();
 		$user->name = 'Personal ('.$username.' - ID: '.$userid.')';
@@ -292,7 +291,8 @@ class Facebook extends CI_Controller {
 		}
 		
 		$data['userid'] = $userid;
-		$data['username'] = $username;
+		$data['username'] = $fbResponse->username;
+		$data['locale'] = substr($fbResponse->locale, 0, 2);
 
 		// Validate settings
 		// FAIL => Display errors on settings page (default)
