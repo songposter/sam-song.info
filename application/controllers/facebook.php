@@ -231,6 +231,7 @@ class Facebook extends CI_Controller {
 		    $data = array(
 		        'ispage' => 0,
 		        'timing_value' => 10,
+		    	'timing' => 'none',
 		        'action_title' => '',
 		        'action_link' => '',
 		        'prefix' => '',
