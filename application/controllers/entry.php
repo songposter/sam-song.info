@@ -13,7 +13,7 @@ class Entry extends CI_Controller {
 	}
 
 	function index()
-	{	
+	{
 		// OpenGraph Metadata BEGIN
 		$opengraph = 	array(
 							'type'				=> 'website',
@@ -28,10 +28,10 @@ class Entry extends CI_Controller {
 		//OpenGraph Metadata END
 
 		// Check for login and hand over base_url
-		$data = array(	'facebook_loggedin' => $this->facebook_api->logged_in(),
-						'twitter_loggedin'	=> $this->twitter_api->logged_in(),
-		                'myspace_loggedin'  => $this->myspace_api->logged_in(),
-						'base' 				=> $this->config->item('base_url'),
+		$data = array(
+					'facebook_loggedin' => $this->facebook_api->logged_in(),
+					'twitter_loggedin'	=> $this->twitter_api->logged_in(),
+					'base' 				=> $this->config->item('base_url'),
 				);
 
 		// Ready => Display View
@@ -44,11 +44,8 @@ class Entry extends CI_Controller {
 		if ($this->twitter_api->logged_in())
 			$this->twitter_api->logout();
 
-		//if ($this->facebook_api->logged_in())
+		if ($this->facebook_api->logged_in())
 			$this->facebook_api->logout();
-
-        if ($this->myspace_api->logged_in())
-			$this->myspace_api->logout();
 
 		redirect(site_url());
 	}

@@ -18,7 +18,7 @@ class Twitter_api
         $this->_CI->load->library('session');
         $this->_CI->load->config('twitter');
         $this->_CI->load->helper('url');
-		        
+
         $consumer_key = $this->_CI->config->item('twitter_consumer_key');
         $consumer_secret = $this->_CI->config->item('twitter_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('twitter_'.$api.'api_url');
@@ -29,7 +29,7 @@ class Twitter_api
         	$this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
         	$this->_oauth = $this->_CI->oauth_api;
        	}
-        
+
         $this->_oauth->debug = true;
     }
 
@@ -82,7 +82,7 @@ class Twitter_api
     {
         $token = $this->_CI->input->get('oauth_token');
         $verifier = $this->_CI->input->get('oauth_verifier');
-        
+
         if ($token === false || $verifier === false)
         {
             $this->_authorize();
@@ -178,7 +178,6 @@ class Twitter_api
      */
     private function _authorize()
     {
-        echo $this->_callback;
     	$requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
         try
         {
@@ -245,7 +244,7 @@ class Twitter_api
             if ($accessToken !== false && is_array($accessToken))
             {
                 $this->_CI->session->unset_userdata(array('requestToken', 'requestSecret'));
-                
+
                 $twitterSession = array
                 (
                     'tw_token' => $accessToken['oauth_token'],

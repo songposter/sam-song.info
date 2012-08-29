@@ -11,17 +11,19 @@
 				Because Posting to Facebook pages instead of your personal account is by far more complex<br />
 				and involves manual changes for each user, this feature is reserved for paying customers.<br />
 				Any donation of 5 EUR (~7.50 USD / ~7.00 CAD) or more qualifies for this feature.<br />
-				Please make sure to include your facebook Id as comment. (Copy profile link from your wall)
+				Donate via the button below while logged in to the Settings and your account will be upgraded automatically.
 			</p>
-			<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+			
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"> -->
 				<fieldset class="nostyle">
 					<input type="hidden" name="cmd" value="_s-xclick" />
-					<!-- <input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" /> -->
-					<input type="hidden" name="hosted_button_id" value="C4HMTSXE5UEZN" />
+					<input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" />
+					<!--  SANDBOX STORED BUTTON BELOW -->
+					<!-- <input type="hidden" name="hosted_button_id" value="C4HMTSXE5UEZN" /> -->
 					<input type="hidden" name="notify_url" value="<?php echo $base?>facebook/ipn" />
-			    <?php if (isset($username) && isset($userid) && isset($locale)): ?>
-			    	<input type="hidden" name="item_name" value="<?php echo $username?>">  
-			    	<input type="hidden" name="item_number" value="<?php echo $userid?>">
+			    <?php if (isset($userid) && isset($locale)): ?>
+			    	<input type="hidden" name="item_name" value="<?php echo $userid?>">  
 			    	<input type="hidden" name="lc" value="<?php echo $locale?>">
 			    <?php endif;?>		
 					<input type="image" src="<?php echo $base?>images/donate_32.png"  name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen mit PayPal." />
@@ -38,6 +40,6 @@
 			</p>
 		</div>
 
-		<div style="font-size: 8pt;">11.06.2012 - 23:53</div>
+		<div style="font-size: 8pt;">01.09.2012 - 01:15</div>
 	</body>
 </html>

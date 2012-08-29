@@ -73,6 +73,30 @@ class Facebook_model extends CI_Model {
 				// TODO: Store seperate PAL scripts per user
 				break;
 
+			case 'donation':
+				if (FALSE === $userid = element('userid', $conditions))
+				{
+					throw new InvalidArgumentException('Condition must contain userid to search for: '.var_export($conditions, TRUE));
+				}
+
+				$this->db->select('ispage')->from('facebook')->where('ID', $userid)->limit(1);
+				$query = $this->db->get();
+
+				if ($query->num_rows() > 1)
+				{
+					throw new LengthException('Userid provided is not unique');
+				}
+				elseif ($query->num_rows() === 0)
+				{
+					return array('ispage' => 0);
+				}
+				else
+				{
+					return $query->row_array();
+				}
+
+				break;
+
 			case 'index':
 				if (FALSE === $userid = element('userid', $conditions))
 				{

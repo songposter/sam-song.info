@@ -290,7 +290,7 @@ class Facebook extends CI_Controller {
 		{
 		    $data['accounts'] = array($user);
 		}
-		
+
 		$data['userid'] = $userid;
 		$data['username'] = $username;
 		$data['locale'] = substr($fbResponse->locale, 3, 2);
@@ -311,7 +311,7 @@ class Facebook extends CI_Controller {
 			$this->_pal($data);
 		}
 	}
-	
+
 	/**
 	 * Process Instant Payment Notifications by PayPal
 	 * Auto-enables Page Posting for PayPal Payments greater than 5 EUR
@@ -319,20 +319,18 @@ class Facebook extends CI_Controller {
 
 	public function ipn()
 	{
-		//$postdata = $this->input->post();
-		
-		$postdata = $_POST;
-		
+		$postdata = $this->input->post(NULL, true);
+
 		$req = 'cmd=_notify-validate';
-		
+
 		foreach ($postdata as $key => $value) {
 			$value = urlencode(stripslashes($value));
 			$req .= "&$key=$value";
 		}
-		
-		//$url = "http://www.paypal.com/cgi-bin/webscr";
-		$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
-		
+
+		$url = "http://www.paypal.com/cgi-bin/webscr";
+		//$url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+
 		$ch = curl_init();
 		$config = array
 		(
@@ -344,29 +342,105 @@ class Facebook extends CI_Controller {
 			CURLOPT_POSTFIELDS => $req,
 		);
 		curl_setopt_array($ch, $config);
-		
+
 		$response = curl_exec($ch);
-		
+
 		// cURL Error
 		if ($response === false)
 		{
-			$e = new FacebookException(curl_error($this->_ch), curl_errno($this->_ch));
+			$e = new Exception(curl_error($this->_ch), curl_errno($this->_ch));
 			curl_close($this->_ch);
-		
+
+			echo "ERROR";
+
 			throw $e;
 		}
-		
-		if (strcmp ($response, "VERIFIED") == 0) {
-			mail('mastacheata@gmail.com', 'IPN VERIFIED', var_export($postdata));
-			log_message('info', 'IPN Verified');
-		} elseif (strcmp ($response, "INVALID") == 0) {
-			mail('mastacheata@gmail.com', 'IPN INVALID', var_export($postdata));
-			log_message('info', 'IPN Invalid');
-		}
-		mail('mastacheata@gmail.com', 'IPN Questionable', var_export($postdata));
-		
-		
 		curl_close($ch);
+
+		$transactionOK = false;
+
+		$paymentcompleted = $postdata['payment_status'] == 'Completed';
+		$paymentcurriseur = $postdata['mc_currency'] == 'EUR';
+		$paymentamount_ok = floatval($postdata['mc_gross']) >= 5.0;
+		//$addressiscorrect = $postdata['receiver_email'] == 'seller_1346177012_biz@gulli.com';
+		$addressiscorrect = $postdata['receiver_email'] == 'mastacheata@unitybox.de';
+
+		if (strcmp ($response, "VERIFIED") == 0)
+		{
+			$transactionOK = $paymentcompleted && $addressiscorrect && $paymentcurriseur && $paymentamount_ok;
+		}
+		elseif (strcmp ($response, "INVALID") == 0)
+		{
+			log_message('error', 'PayPal Transaction Invalid');
+		}
+
+		if ($transactionOK === true)
+		{
+			$update['ispage'] = 1;
+			$userid = $postdata['item_name'];
+
+			$this->facebook_model->facebook_update($update, $userid);
+		}
+		elseif ($transactionOK === false && is_array($postdata) && sizeof($postdata) > 2)
+		{
+			mail('support@sam-song.info', 'PayPal Transaction needs Review', var_export($postdata, TRUE));
+		}
+	}
+
+	/**
+	 * Confirmation Page after donating via PayPal
+	 * If the transaction qualified for page posting the user is notified about activation
+	 */
+	public function pdt()
+	{
+		$req = 'cmd=_notify-synch';
+
+		$at = 'GHIAd2sAoL8Z1vFnk2V2HTmaav10PbuW9Mb6L6tOiz_KATDObYLTyCdfMWS';
+		//$at = 'XUhmfuV3fdEzeNHeArW-2URhf23-RWU5dRjBy6X3lVM3NK8LunTby6pyVha';
+
+		$req .= '&at='.$at;
+
+		$tx = $this->input->get('tx');
+
+		if (!empty($tx))
+		{
+			$url = "http://www.paypal.com/cgi-bin/webscr";
+			//$url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+
+			$req .= '&tx='.$tx;
+
+			$ch = curl_init();
+			$config = array
+			(
+					CURLOPT_URL => $url,
+					CURLOPT_FAILONERROR => TRUE,
+					CURLOPT_RETURNTRANSFER => TRUE,
+					CURLOPT_TIMEOUT => 3,
+					CURLOPT_POST => TRUE,
+					CURLOPT_POSTFIELDS => $req,
+			);
+			curl_setopt_array($ch, $config);
+
+			$response = curl_exec($ch);
+
+			$status = substr($response, 0, strpos($response, "\n"));
+			$transactionstring = substr($response, strpos($response, "\n")+1);
+
+			if ($status == 'SUCCESS')
+			{
+				$transactionstring = str_replace("\n", "&", $transactionstring);
+				parse_str($transactionstring, $transactiondata);
+			}
+
+			$data = elements(array('payment_date', 'payment_status', 'item_name', 'mc_gross', 'mc_currency'), $transactiondata);
+			$facebook = $this->facebook_model->facebook_retrieve('donation', array('userid' => $data['item_name']));
+
+			$data['ispage'] = $facebook['ispage'];
+			$data['base'] = $this->config->item('base_url');
+
+			$this->load->view('payment_confirmation', $data);
+			$this->load->view('footer');
+		}
 	}
 
 	/**

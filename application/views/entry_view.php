@@ -55,7 +55,6 @@
 		<?php if ($facebook_loggedin): ?>
 			<span class="login">
 				<a href="facebook/settings"><img src="<?php echo $base?>images/settings_32.png" /></a>
-				<div class="fb-add-to-timeline" data-show-faces="true" data-mode="button"></div>
 				<fb:like class="like"></fb:like>
 			</span>
 		<?php else: ?>
@@ -64,28 +63,6 @@
 				<fb:facepile class="facepile"></fb:facepile>
 			</span>
 		<?php endif; ?>
-		</div>
-
-		<div class="section">
-			<img src="<?php echo $base?>images/myspace_64.png" />
-			<h2>MySpace</h2>
-			<p>
-				Once leader in social networks at almost 300 Million users in 2009 it opened the world of social communities to many.<br />
-				With it's focus on music, MySpace brought attention to then unsigned acts OneRepublic, Lilly Allen and Sean Kingston.<br />
-				This makes MySpace the perfect spot to promote your online radio station.<br />
-				MySpace is still work in progress and might not be 100% stable, so use at own risk.
-			</p>
-
-		<?php if ($myspace_loggedin): ?>
-			<span class="login">
-				<a href="myspace/settings"><img src="<?php echo $base?>images/settings_32.png" /></a>
-			</span>
-		<?php else: ?>
-			<span class="login">
-				<a href="myspace/login"><img src="<?php echo $base?>images/login_32.png" /></a>
-			</span>
-		<?php endif; ?>
-
 		</div>
 
 		<div id="fb-root"></div>
