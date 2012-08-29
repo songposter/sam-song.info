@@ -356,8 +356,10 @@ class Facebook extends CI_Controller {
 		
 		if (strcmp ($response, "VERIFIED") == 0) {
 			mail('mastacheata@gmail.com', 'IPN VERIFIED', var_export($postdata));
+			log_message('info', 'IPN Verified');
 		} elseif (strcmp ($response, "INVALID") == 0) {
 			mail('mastacheata@gmail.com', 'IPN INVALID', var_export($postdata));
+			log_message('info', 'IPN Invalid');
 		}
 		
 		curl_close($ch);
