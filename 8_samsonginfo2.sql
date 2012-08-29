@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `facebook` (
   `expires` int(11) NOT NULL,
   `ispage` tinyint(1) NOT NULL DEFAULT '0',
   `use_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `songtypes` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `timing` enum('WaitForTime','WaitForPlayCount') COLLATE utf8_unicode_ci NOT NULL,
   `timing_value` int(3) NOT NULL,

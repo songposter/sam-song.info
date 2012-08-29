@@ -18,6 +18,7 @@
 					<input type="hidden" name="cmd" value="_s-xclick" />
 					<!-- <input type="hidden" name="hosted_button_id" value="6MD7BXRHSGGWU" /> -->
 					<input type="hidden" name="hosted_button_id" value="C4HMTSXE5UEZN" />
+					<input type="hidden" name="notify_url" value="<?php echo $base?>facebook/ipn" />
 			    <?php if (isset($username) && isset($userid) && isset($locale)): ?>
 			    	<input type="hidden" name="item_name" value="<?php echo $username?>">  
 			    	<input type="hidden" name="item_number" value="<?php echo $userid?>">

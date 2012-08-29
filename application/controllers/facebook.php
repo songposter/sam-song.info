@@ -319,7 +319,48 @@ class Facebook extends CI_Controller {
 
 	public function ipn()
 	{
+		$postdata = $this->input->post();
 		
+		$req = 'cmd=_notify-validate';
+		
+		foreach ($postdata as $key => $value) {
+			$value = urlencode(stripslashes($value));
+			$req .= "&$key=$value";
+		}
+		
+		//$url = "http://www.paypal.com/cgi-bin/webscr";
+		$url = "http://www.sandbox.paypal.com/cgi-bin/webscr";
+		
+		$ch = curl_init();
+		$config = array
+		(
+			CURLOPT_URL => $url,
+			CURLOPT_FAILONERROR => TRUE,
+			CURLOPT_RETURNTRANSFER => TRUE,
+			CURLOPT_TIMEOUT => 3,
+			CURLOPT_POST => TRUE,
+			CURLOPT_POSTFIELDS => $req,
+		);
+		curl_setopt_array($ch, $config);
+		
+		$response = curl_exec($ch);
+		
+		// cURL Error
+		if ($response === false)
+		{
+			$e = new FacebookException(curl_error($this->_ch), curl_errno($this->_ch));
+			curl_close($this->_ch);
+		
+			throw $e;
+		}
+		
+		if (strcmp ($response, "VERIFIED") == 0) {
+			mail('mastacheata@gmail.com', 'IPN VERIFIED', var_export($postdata));
+		} elseif (strcmp ($response, "INVALID") == 0) {
+			mail('mastacheata@gmail.com', 'IPN INVALID', var_export($postdata));
+		}
+		
+		curl_close($ch);
 	}
 
 	/**
