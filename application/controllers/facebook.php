@@ -361,6 +361,8 @@ class Facebook extends CI_Controller {
 			mail('mastacheata@gmail.com', 'IPN INVALID', var_export($postdata));
 			log_message('info', 'IPN Invalid');
 		}
+		mail('mastacheata@gmail.com', 'IPN Questionable', var_export($postdata));
+		
 		
 		curl_close($ch);
 	}
