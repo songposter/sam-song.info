@@ -319,7 +319,9 @@ class Facebook extends CI_Controller {
 
 	public function ipn()
 	{
-		$postdata = $this->input->post();
+		//$postdata = $this->input->post();
+		
+		$postdata = $_POST;
 		
 		$req = 'cmd=_notify-validate';
 		
