@@ -28,7 +28,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `facebook`;
 CREATE TABLE IF NOT EXISTS `facebook` (
   `ID` bigint(20) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
   `expires` int(11) NOT NULL,
   `ispage` tinyint(1) NOT NULL DEFAULT '0',
   `use_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
