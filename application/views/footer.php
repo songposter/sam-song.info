@@ -41,5 +41,13 @@
 		</div>
 
 		<div style="font-size: 8pt;">01.09.2012 - 01:15</div>
+        <script type="text/javascript">
+            var uvOptions = {};
+            (function() {
+                var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+                uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/aOrObFAKDYc7FPWQACYmg.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+            })();
+        </script>
 	</body>
 </html>
