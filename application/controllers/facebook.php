@@ -125,7 +125,7 @@ class Facebook extends CI_Controller {
         // Add action link as json encoded array of title and link
         if ($data['action_link'] !== '')
         {
-			$site= 'http://api.bitly.com/v3/shorten?login=mastacheata&apiKey=R_d3e1cba0def47f672087307d5ea7785d&longUrl='.$data['action_link'].'&format=txt';
+			$site= 'http://api.bitly.com/v3/shorten?login=mastacheata&apiKey=R_d3e1cba0def47f672087307d5ea7785d&longUrl='.urlencode($data['action_link']).'&format=txt';
             $shortlink = file_get_contents($site);
 
             $action = array('name' => $data['action_title'], 'link' => $shortlink);
@@ -211,7 +211,7 @@ class Facebook extends CI_Controller {
 		}
 		catch (FacebookException $e)
 		{
-		    log_message('error', $e->getMessage());
+		    log_message('error', 'Facebook:'.$e->getMessage());
 		    redirect('facebook/login');
 		}
 
@@ -279,7 +279,7 @@ class Facebook extends CI_Controller {
 		    {
 		    	// An error in this state should only occur when testing this myself
 		    	// Especially when the token was set to something other than the user token
-		    	log_message('error', $fbe->getMessage());
+		    	log_message('error', 'Facebook:'.$fbe->getMessage());
 		    	redirect('facebook/logout');
 		    }
 
@@ -322,11 +322,18 @@ class Facebook extends CI_Controller {
 		$postdata = $this->input->post(NULL, true);
 
 		$req = 'cmd=_notify-validate';
+		
+		
 
 		foreach ($postdata as $key => $value) {
-			$value = urlencode(stripslashes($value));
+			if (get_magic_quotes_gpc()) {
+				$value = stripslashes($value);
+			}
+			$value = urlencode(iconv('UTF-8', $postdata['charset'], $value));
 			$req .= "&$key=$value";
 		}
+		
+		log_message('debug', 'PayPal req: '.$req);
 
 		$url = "http://www.paypal.com/cgi-bin/webscr";
 		//$url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
@@ -348,12 +355,8 @@ class Facebook extends CI_Controller {
 		// cURL Error
 		if ($response === false)
 		{
-			$e = new Exception(curl_error($this->_ch), curl_errno($this->_ch));
+			log_message('error', curl_error($this->_ch));
 			curl_close($this->_ch);
-
-			echo "ERROR";
-
-			throw $e;
 		}
 		curl_close($ch);
 
@@ -361,17 +364,20 @@ class Facebook extends CI_Controller {
 
 		$paymentcompleted = $postdata['payment_status'] == 'Completed';
 		$paymentcurriseur = $postdata['mc_currency'] == 'EUR';
-		$paymentamount_ok = floatval($postdata['mc_gross']) >= 5.0;
+		$paymentamount_ok = ($postdata['mc_gross'] >= 5.0);
+		
+		$postdata['mc_gross_float'] = floatval($postdata['mc_gross']);
 		//$addressiscorrect = $postdata['receiver_email'] == 'seller_1346177012_biz@gulli.com';
 		$addressiscorrect = $postdata['receiver_email'] == 'mastacheata@unitybox.de';
 
-		if (strcmp ($response, "VERIFIED") == 0)
+		if (strcmp ($response, "VERIFIED") === 0)
 		{
 			$transactionOK = $paymentcompleted && $addressiscorrect && $paymentcurriseur && $paymentamount_ok;
 		}
-		elseif (strcmp ($response, "INVALID") == 0)
+		elseif (strcmp ($response, "INVALID") === 0)
 		{
 			log_message('error', 'PayPal Transaction Invalid');
+			log_message('error', 'PayPal '.$response);
 		}
 
 		if ($transactionOK === true)
@@ -380,10 +386,36 @@ class Facebook extends CI_Controller {
 			$userid = $postdata['item_name'];
 
 			$this->facebook_model->facebook_update($update, $userid);
+			log_message('debug', 'Paypal User '.$userid.' updated');
 		}
 		elseif ($transactionOK === false && is_array($postdata) && sizeof($postdata) > 2)
 		{
-			mail('support@sam-song.info', 'PayPal Transaction needs Review', var_export($postdata, TRUE));
+			if (!$paymentcompleted) {
+				if ($postdata['payment_status'] != 'Refunded' || $postdata['reason_code'] != 'refund') {
+					mail('support@sam-song.info', '###SongInfo#### Transaction not completed', var_export($postdata, TRUE));
+					log_message('error', 'PayPal Transaction not completed');
+				}
+			}
+			elseif (!$paymentcurriseur) {
+				mail('support@sam-song.info', '###SongInfo#### Transaction not in EUR', var_export($postdata, TRUE));
+				log_message('error', 'PayPal Transaction not in EUR');
+			}
+			elseif (!$paymentamount_ok) {
+				mail('support@sam-song.info', '###SongInfo#### Transaction less than 5 EUR', var_export($postdata, TRUE));
+				log_message('error', 'PayPal Transaction less than 5 EUR');
+			}
+			elseif (!$addressiscorrect) {
+				mail('support@sam-song.info', '###SongInfo#### Transaction not to mastacheata@unitybox.de', var_export($postdata, TRUE));
+				log_message('error', 'PayPal Transaction not to mastacheata@unitybox.de');
+			}
+			elseif (!is_array($postdata)) {
+				mail('support@sam-song.info', '###SongInfo#### Postdata is not an array', var_export($postdata, TRUE));
+				log_message('error', 'PayPal Transaction Data empty');
+			}
+			elseif (!(sizeof($postdata) > 2)) {
+				mail('support@sam-song.info', '###SongInfo#### Postdata has too few entries', var_export($postdata, TRUE));
+				log_message('error', 'PayPal Transaction Data incomplete');
+			}
 		}
 	}
 

@@ -23,12 +23,17 @@ class Twitter_api
         $consumer_secret = $this->_CI->config->item('twitter_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('twitter_'.$api.'api_url');
 
-        if(class_exists('OAuth')) {
+		if(class_exists('OAuth')) {
         	$this->_oauth = new OAuth($consumer_key, $consumer_secret);
-        } else {
-        	$this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
-        	$this->_oauth = $this->_CI->oauth_api;
-       	}
+        } else { 
+	        $this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
+	        $this->_oauth = $this->_CI->oauth_api;
+	        define('OAUTH_HTTP_METHOD_GET',		'GET');
+	        define('OAUTH_HTTP_METHOD_POST',	'POST');
+	        define('OAUTH_HTTP_METHOD_PUT',		'PUT');
+	        define('OAUTH_HTTP_METHOD_DELETE',	'DELETE');
+	        define('OAUTH_HTTP_METHOD_HEAD',	'HEAD');	        
+        }
 
         $this->_oauth->debug = true;
     }
@@ -151,7 +156,7 @@ class Twitter_api
 
             $this->_oauth->fetch($uri, $params, element(strtoupper($request_method), $supportedMethods));
         }
-        catch (OAuthException $oEx)
+        catch (Exception $oEx)
         {
             // Duplicate entry => Only log for debug
             if ($oEx->getMessage() === "Invalid auth/bad request (got a 403, expected HTTP/1.1 20X or a redirect)")
@@ -169,7 +174,16 @@ class Twitter_api
             }
         }
         // Everything fine, just decode json into stdObject
-        return json_decode($this->_oauth->getLastResponse());
+        $response = json_decode($this->_oauth->getLastResponse());
+                
+        if (property_exists($response, 'user')) {
+        	return $response;
+        } elseif (property_exists($response, 'error')) {
+        	log_message('error', 'User: '.$this->_token['tw_screenname']."\n".$response->error);
+        	log_message('debug', $response->request);
+        	log_message('debug', $this->_oauth->getLastResponseInfo());
+        	return false;
+        }
     }
 
     /**
@@ -183,7 +197,7 @@ class Twitter_api
         {
             $requestToken = $this->_oauth->getRequestToken($requestURL, $this->_callback);
         }
-        catch (OAuthException $e)
+        catch (Exception $e)
         {
             log_message('error', 'Error getting Request Token: '.$e->getMessage);
             log_message('debug', $e->debugInfo);
@@ -232,7 +246,7 @@ class Twitter_api
             {
                 $accessToken = $this->_oauth->getAccessToken($accessURL, '', $requestVerifier);
             }
-            catch (OAuthException $e)
+            catch (Exception $e)
             {
                 var_dump($e);
             	log_message('error', 'Error in access token exchange: '.$e->getMessage());

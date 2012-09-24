@@ -58,7 +58,7 @@ class Twitter extends CI_Controller
 
         $twResponse = $this->twitter_api->call('post', $api_url, $api_parameters);
 
-        if ($twResponse === false)
+        if ($twResponse === false || $twResponse === NULL)
         {
         	die("An error occured, your request could not be completed.");
         }

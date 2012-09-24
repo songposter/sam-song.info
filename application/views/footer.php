@@ -23,7 +23,8 @@
 					<!-- <input type="hidden" name="hosted_button_id" value="C4HMTSXE5UEZN" /> -->
 					<input type="hidden" name="notify_url" value="<?php echo $base?>facebook/ipn" />
 			    <?php if (isset($userid) && isset($locale)): ?>
-			    	<input type="hidden" name="item_name" value="<?php echo $userid?>">  
+			    	<input type="hidden" name="item_name" value="<?php echo $userid?>">
+			    	<input type="hidden" name="item_number" value="<?php echo $userid?>">  
 			    	<input type="hidden" name="lc" value="<?php echo $locale?>">
 			    <?php endif;?>		
 					<input type="image" src="<?php echo $base?>images/donate_32.png"  name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen mit PayPal." />

@@ -9,7 +9,6 @@ class Entry extends CI_Controller {
 		$this->load->helper('facebook');
 		$this->load->library('twitter_api');
 		$this->load->library('facebook_api');
-		$this->load->library('myspace_api');
 	}
 
 	function index()
