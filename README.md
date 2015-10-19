@@ -1,5 +1,5 @@
-SAM Broadcaster Song Info Poster
-================================
+SAM Broadcaster Song Info Poster v2 (2010-2015)
+===============================================
 
 Song Info Poster connects your SAM to popular social networks Facebook, Twitter and MySpace.  
 The basic functionality included in both networks is sending messages to either or both platforms,  
