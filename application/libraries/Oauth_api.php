@@ -171,7 +171,8 @@ class Oauth_api {
 		} else {
 			$oae = new MyOAuthException(curl_error($ch));
 			$oae->lastResponse = curl_error($ch);
-			$oae->debugInfo = curl_getinfo($ch);			
+			$oae->debugInfo = curl_getinfo($ch);
+			throw $oae;
 			return false;
 		}
 	}
