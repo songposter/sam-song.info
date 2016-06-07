@@ -32,19 +32,19 @@ class Twitter extends CI_Controller
     public function index()
     {
         // userid from GET request
-		$userid = $this->input->get('userid', TRUE);
-
-		$this->load->library('user_agent');
-		if ($this->agent->agent_string() !== 'Mozilla/3.0 (compatible)' && $this->input->get('override') !== 'true')
-		{
-		    redirect('/');
-		    die();
-		}
+    	$userid = $this->input->get('userid', TRUE);
+    
+    	$this->load->library('user_agent');
+    	if ($this->agent->agent_string() !== 'Mozilla/3.0 (compatible)' && $this->input->get('override') !== 'true')
+    	{
+    	    redirect('/');
+    	    die();
+    	}
 
         // retrieve settings from database via model
-		$data = $this->twitter_model->twitter_retrieve('index', array('tw_userid' => $userid));
+    	$data = $this->twitter_model->twitter_retrieve('index', array('tw_userid' => $userid));
 
-		// parameters for the API call, start with the message including pre- and postfix
+	    // parameters for the API call, start with the message including pre- and postfix
         $api_parameters = array('status' => stripslashes(trim($data['prefix'].' '.$this->input->get('message', TRUE).' '.$data['postfix'])));
 
         // post new messages to the json endpoint
@@ -89,10 +89,10 @@ class Twitter extends CI_Controller
 		{
 		    $data = array(
 		        'timing_value' => 10,
-    	        'prefix' => '',
+    			'prefix' => '',
 		        'postfix' => '',
 		    	'timing' => 'WaitForTime',	
-    	    );
+		    );
 		}
 
 		$data['this_url'] = current_url();
