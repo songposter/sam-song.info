@@ -5,8 +5,9 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author		EllisLab Dev Team
+ * @copyright		Copyright (c) 2008 - 2014, EllisLab, Inc.
+ * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -23,29 +24,89 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Output
- * @author		ExpressionEngine Dev Team
+ * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/output.html
  */
 class CI_Output {
 
+	/**
+	 * Current output string
+	 *
+	 * @var string
+	 * @access 	protected
+	 */
 	protected $final_output;
+	/**
+	 * Cache expiration time
+	 *
+	 * @var int
+	 * @access 	protected
+	 */
 	protected $cache_expiration	= 0;
+	/**
+	 * List of server headers
+	 *
+	 * @var array
+	 * @access 	protected
+	 */
 	protected $headers			= array();
-	protected $mime_types			= array();
+	/**
+	 * List of mime types
+	 *
+	 * @var array
+	 * @access 	protected
+	 */
+	protected $mime_types		= array();
+	/**
+	 * Determines wether profiler is enabled
+	 *
+	 * @var book
+	 * @access 	protected
+	 */
 	protected $enable_profiler	= FALSE;
-	protected $parse_exec_vars	= TRUE;	// whether or not to parse variables like {elapsed_time} and {memory_usage}
-
+	/**
+	 * Determines if output compression is enabled
+	 *
+	 * @var bool
+	 * @access 	protected
+	 */
 	protected $_zlib_oc			= FALSE;
+	/**
+	 * List of profiler sections
+	 *
+	 * @var array
+	 * @access 	protected
+	 */
 	protected $_profiler_sections = array();
+	/**
+	 * Whether or not to parse variables like {elapsed_time} and {memory_usage}
+	 *
+	 * @var bool
+	 * @access 	protected
+	 */
+	protected $parse_exec_vars	= TRUE;
 
+	/**
+	 * Constructor
+	 *
+	 */
 	function __construct()
 	{
 		$this->_zlib_oc = @ini_get('zlib.output_compression');
 
 		// Get mime types for later
-		include APPPATH.'config/mimes'.EXT;
+		if (defined('ENVIRONMENT') AND file_exists(APPPATH.'config/'.ENVIRONMENT.'/mimes.php'))
+		{
+		    include APPPATH.'config/'.ENVIRONMENT.'/mimes.php';
+		}
+		else
+		{
+			include APPPATH.'config/mimes.php';
+		}
+
+
 		$this->mime_types = $mimes;
-		
+
 		log_message('debug', "Output Class Initialized");
 	}
 
@@ -78,7 +139,7 @@ class CI_Output {
 	function set_output($output)
 	{
 		$this->final_output = $output;
-		
+
 		return $this;
 	}
 
@@ -119,6 +180,7 @@ class CI_Output {
 	 *
 	 * @access	public
 	 * @param	string
+	 * @param 	bool
 	 * @return	void
 	 */
 	function set_header($header, $replace = TRUE)
@@ -168,7 +230,7 @@ class CI_Output {
 		$header = 'Content-Type: '.$mime_type;
 
 		$this->headers[] = array($header, TRUE);
-		
+
 		return $this;
 	}
 
@@ -257,6 +319,7 @@ class CI_Output {
 	 * benchmark timer so the page rendering speed and memory usage can be shown.
 	 *
 	 * @access	public
+	 * @param 	string
 	 * @return	mixed
 	 */
 	function _display($output = '')
@@ -393,6 +456,7 @@ class CI_Output {
 	 * Write a Cache File
 	 *
 	 * @access	public
+	 * @param 	string
 	 * @return	void
 	 */
 	function _write_cache($output)
@@ -444,6 +508,8 @@ class CI_Output {
 	 * Update/serve a cached file
 	 *
 	 * @access	public
+	 * @param 	object	config class
+	 * @param 	object	uri class
 	 * @return	void
 	 */
 	function _display_cache(&$CFG, &$URI)

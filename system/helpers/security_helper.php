@@ -5,8 +5,9 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author		EllisLab Dev Team
+ * @copyright		Copyright (c) 2008 - 2014, EllisLab, Inc.
+ * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -21,7 +22,7 @@
  * @package		CodeIgniter
  * @subpackage	Helpers
  * @category	Helpers
- * @author		ExpressionEngine Dev Team
+ * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/security_helper.html
  */
 
@@ -67,22 +68,6 @@ if ( ! function_exists('sanitize_filename'))
 /**
  * Hash encode a string
  *
- * This is simply an alias for do_hash()
- * dohash() is now deprecated
- */
-if ( ! function_exists('dohash'))
-{
-	function dohash($str, $type = 'sha1')
-	{
-		return do_hash($str, $type);
-	}
-}
-
-// --------------------------------------------------------------------
-
-/**
- * Hash encode a string
- *
  * @access	public
  * @param	string
  * @return	string
@@ -93,23 +78,7 @@ if ( ! function_exists('do_hash'))
 	{
 		if ($type == 'sha1')
 		{
-			if ( ! function_exists('sha1'))
-			{
-				if ( ! function_exists('mhash'))
-				{
-					require_once(BASEPATH.'libraries/Sha1'.EXT);
-					$SH = new CI_SHA;
-					return $SH->generate($str);
-				}
-				else
-				{
-					return bin2hex(mhash(MHASH_SHA1, $str));
-				}
-			}
-			else
-			{
-				return sha1($str);
-			}
+			return sha1($str);
 		}
 		else
 		{
