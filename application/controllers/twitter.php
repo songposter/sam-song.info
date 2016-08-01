@@ -35,10 +35,16 @@ class Twitter extends CI_Controller
         $userid = $this->input->get('userid', TRUE);
     
         $this->load->library('user_agent');
-        if ($this->agent->agent_string() !== 'Mozilla/3.0 (compatible)' && $this->input->get('override') !== 'true')
-        {
-            redirect('/');
-            die();
+        $allowedAgentsExact = array_flip(['Mozilla/3.0 (compatible)', 'Mozilla/4.0 (compatible; ICS)']);
+        $allowedAgentsTemplate = ['|Mozilla/4.0 \(compatible; SAMBC[\d\.]+\)|', '|sambc/20[\d]{2}\.[\d]|'];
+        if (!array_key_exists($this->agent->agent_string(), $allowedAgentsExact)) {
+            if (preg_filter($allowedAgentsTemplate, '', $this->agent->agent_string()) === null) {
+                var_dump(preg_filter($allowedAgentsTemplate, '', $this->agent->agent_string()));
+                die('blubb');
+                log_message('error', 'redirect to frontpage');
+                redirect(site_url());
+                die();
+            }
         }
 
         // retrieve settings from database via model
