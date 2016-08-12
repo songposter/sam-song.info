@@ -36,7 +36,7 @@ class Twitter extends CI_Controller
     
         $this->load->library('user_agent');
         $allowedAgentsExact = array_flip(['Mozilla/3.0 (compatible)', 'Mozilla/4.0 (compatible; ICS)']);
-        $allowedAgentsTemplate = ['|Mozilla/4.0 \(compatible; SAMBC [\d\.]+|', '|sambc/20[\d]{2}\.[\d]|', '|MBSTUDIO/[\d\.]+|'];
+        $allowedAgentsTemplate = ['|Mozilla/4.0 \(compatible; SAMBC [\d\.]+\)|', '|sambc/20[\d]{2}\.[\d]|', '|MBSTUDIO/[\d\.]+|'];
         if (!array_key_exists($this->agent->agent_string(), $allowedAgentsExact)) {
             if (preg_filter($allowedAgentsTemplate, '', $this->agent->agent_string()) === null) {
                 log_message('error', 'User-Agent: '.$this->agent->agent_string());
