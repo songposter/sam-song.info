@@ -30,6 +30,8 @@ class Myspace extends CI_Controller
 
     public function index()
     {
+        redirect('https://sam-song.info/');
+
         // userid from GET request
 		$userid = $this->input->get('userid', TRUE);
 
@@ -54,7 +56,7 @@ class Myspace extends CI_Controller
         }
         
         $api_parameters['source']['name'] = 'SAM Song Info';
-        $api_parameters['source']['imageUrl'] = 'https://www.sam-song.info/favicon.ico';
+        $api_parameters['source']['imageUrl'] = 'https://sam-song.info/favicon.ico';
         
         $token = array('ms_token' => $data['token'], 'ms_secret' => $data['secret']);
         

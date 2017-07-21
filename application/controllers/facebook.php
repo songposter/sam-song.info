@@ -2,6 +2,8 @@
 
 class Facebook extends CI_Controller {
 
+    private $uuid;
+
     public function __construct()
 	{
 		parent::__construct();
@@ -10,6 +12,8 @@ class Facebook extends CI_Controller {
 		$this->load->model('facebook_model');
 		$this->load->helper('facebook');
 		$this->facebook_api->set_callback(site_url('facebook/settings'));
+
+		$this->uuid = uniqid('fbuuid_');
 	}
 
 	/**
@@ -44,11 +48,11 @@ class Facebook extends CI_Controller {
 		try {
 			$fbResponse = $this->facebook_api->call($method, $uri, $params);
 		} catch (FacebookException $e) {
-			log_message('debug', $method.' /'.$uri.http_build_query($params).'&token='.$this->facebook_api->get_token());
+			log_message('debug', 'Facebook-API: #'.$this->uuid.'#:'.$method.' /'.$uri.http_build_query($params).'&token='.$this->facebook_api->get_token());
 
-			log_message('error', $e->getCode().' - '.$e->getMessage());
-        	echo $e->getMessage();
-            exit(0);
+			log_message('error', 'Facebook-API: #'.$this->uuid.'#'.$e->getCode().' - '.$e->getMessage());
+	        	echo $e->getMessage();
+			exit(0);
 		}
 
 		var_dump($fbResponse);
@@ -61,32 +65,40 @@ class Facebook extends CI_Controller {
 
 	public function index()
 	{
-        $this->load->library('user_agent');
+       	$this->load->library('user_agent');
 
-	    // userid from GET request
+		// userid from GET request
 		$userid = $this->input->get('userid', TRUE);
 
-		if ($this->agent->agent_string() !== 'Mozilla/3.0 (compatible)' && $this->input->get('override') !== 'true')
+		if (($this->agent->agent_string() !== 'Mozilla/3.0 (compatible)')  && ($this->agent->agent_string() !== 'Mozilla/4.0 (compatible; ICS)') && (strpos($this->agent->agent_string(), 'Mozilla/4.0 (compatible; SAMBC 201') === false) && ($this->input->get('override') !== 'true') && (strtolower(ENVIRONMENT) == 'production'))
 		{
 		    redirect('/');
 		    die();
 		}
 
-        // retrieve settings from database via model
+	        // retrieve settings from database via model
 		$data = $this->facebook_model->facebook_retrieve('index', array('userid' => $userid));
 
 		if ($data['use_token'] === '' || ($data['expires'] != 0 && $data['expires'] < time()))
 		{
-			die('ERROR: REAUTHENTICATE AT SAM-SONG.INFO (Usually every 50 days)');
+		    log_message('error', 'Facebook-Index: #'.$this->uuid.'# User-ID '.$userid.' expired at '.date('Y-m-d H:i:s', $data['expires']));
+		    die('ERROR: REAUTHENTICATE AT SAM-SONG.INFO (Usually every 50 days)');
 		}
 
-		if ($data['limit_reached'] >= strtotime('-22 hours'))
+		if ($data['limit_reached'] >= time()-79200)
 		{
-			die('ERROR: Request limit reached, increase time between posts');
+		    log_message('error', 'Facebook-Index: #'.$this->uuid.'# User-ID '.$userid.' Reached Permanent Limit at '.date('Y-m-d H:i:s'));
+		    die('ERROR: Request limit reached, increase time between posts');
 		}
 		else
 		{
 			$this->facebook_model->facebook_update(array('limit_reached' => ''), $userid);
+		}
+
+		if ($data['last_post'] != 0 && $data['last_post'] >= time()-7200 && $data['ispage'] != 1)
+		{
+		    log_message('error', 'Facebook-Index: #'.$this->uuid.'# User-ID '.$userid.' Reached Temporary Limit at '.date('Y-m-d H:i:s'));
+		    die('ERROR: Request limit reached, increase time between posts');
 		}
 
 		$messages = explode("\n",$this->input->get('message', TRUE));
@@ -95,10 +107,12 @@ class Facebook extends CI_Controller {
 		if ($message == '')
 		    die('Error: No message provided');
 
+		log_message('info', 'Facebook-Index: #'.$this->uuid.'# Message: '.implode(' ',$messages));
+
 		$description = implode('<center></center>', $messages);
 
 		// parameters for the API call, start with the message including pre- and postfix
-        $api_parameters = array('caption' =>  stripslashes(trim($description)));
+	        $api_parameters = array('caption' =>  stripslashes(trim($description)));
 
         // Combine picture url from specific picture and url to directory
         if (($data['picture_dir'] !== '') && $this->input->get('picture', TRUE))
@@ -121,11 +135,10 @@ class Facebook extends CI_Controller {
 
         $api_parameters['name'] = stripslashes(trim($data['prefix'].' '.$message.' '.$data['postfix']));
 
-
         // Add action link as json encoded array of title and link
         if ($data['action_link'] !== '')
         {
-			$site= 'http://api.bitly.com/v3/shorten?login=mastacheata&apiKey=R_d3e1cba0def47f672087307d5ea7785d&longUrl='.urlencode($data['action_link']).'&format=txt';
+	    $site= 'http://api.bitly.com/v3/shorten?login=mastacheata&apiKey=R_d3e1cba0def47f672087307d5ea7785d&longUrl='.urlencode($data['action_link']).'&format=txt';
             $shortlink = file_get_contents($site);
 
             $action = array('name' => $data['action_title'], 'link' => $shortlink);
@@ -164,18 +177,25 @@ class Facebook extends CI_Controller {
         		$this->facebook_model->facebook_update(array('limit_reached' => time()), $userid);
         	}
 
-			log_message('debug',
-							'User: '.$this->input->get('userid').' '
-							.'Token: '.$this->facebook_api->get_token().' '
-							.'URL: '.$api_url
-						);
-			log_message('error', $fbe->getCode().' - '.$fbe->getMessage());
+
+
+		log_message('error', 'Facebook-Index: #'.$this->uuid.'# '.
+			'User: '.$this->input->get('userid').' '
+			.'Token: '.$this->facebook_api->get_token().' '
+			.'URL: '.$api_url
+		);
+		log_message('error', 'Facebook-Index: #'.$this->uuid.'# '.$fbe->getCode().' - '.$fbe->getMessage());
         	echo $fbe->getMessage();
-            exit(0);
+                exit(0);
         }
+
+        log_message('info', 'Facebook-Index: #'.$this->uuid.'# last post => '. time().', User => '.$userid);
+        $this->facebook_model->facebook_update(array('last_post' => time()), $userid);
 
         //POSTing the message succeeded, output the message id
         echo '##Facebook: https://graph.facebook.com/'.$fbResponse->id.'?access_token='.$this->facebook_api->get_token();
+
+        log_message('info', 'Facebook-Index: SUCCESS #'.$this->uuid.'# https://graph.facebook.com/'.$fbResponse->id.'?access_token='.$this->facebook_api->get_token());
 	}
 
 	/**
@@ -211,7 +231,7 @@ class Facebook extends CI_Controller {
 		}
 		catch (FacebookException $e)
 		{
-		    log_message('error', 'Facebook:'.$e->getMessage());
+		    log_message('error', 'Facebook-Settings: #'.$this->uuid.'# '.$e->getMessage());
 		    redirect('facebook/login');
 		}
 
@@ -242,6 +262,7 @@ class Facebook extends CI_Controller {
 		        'website_link' => '',
 		        'picture_dir' => '',
 	            'expires' => '',
+		        'last_post' => 0,
 		    );
 		}
 
@@ -279,7 +300,7 @@ class Facebook extends CI_Controller {
 		    {
 		    	// An error in this state should only occur when testing this myself
 		    	// Especially when the token was set to something other than the user token
-		    	log_message('error', 'Facebook:'.$fbe->getMessage());
+		    	log_message('error', 'Facebook-Settings: #'.$this->uuid.'# '.$fbe->getMessage());
 		    	redirect('facebook/logout');
 		    }
 
@@ -322,8 +343,8 @@ class Facebook extends CI_Controller {
 		$postdata = $this->input->post(NULL, true);
 
 		$req = 'cmd=_notify-validate';
-		
-		
+
+
 
 		foreach ($postdata as $key => $value) {
 			if (get_magic_quotes_gpc()) {
@@ -332,7 +353,7 @@ class Facebook extends CI_Controller {
 			$value = urlencode(iconv('UTF-8', $postdata['charset'], $value));
 			$req .= "&$key=$value";
 		}
-		
+
 		log_message('debug', 'PayPal req: '.$req);
 
 		$url = "http://www.paypal.com/cgi-bin/webscr";
@@ -355,7 +376,7 @@ class Facebook extends CI_Controller {
 		// cURL Error
 		if ($response === false)
 		{
-			log_message('error', curl_error($this->_ch));
+			log_message('error', 'Paypal response error: '.curl_error($this->_ch));
 			curl_close($this->_ch);
 		}
 		curl_close($ch);
@@ -365,7 +386,7 @@ class Facebook extends CI_Controller {
 		$paymentcompleted = $postdata['payment_status'] == 'Completed';
 		$paymentcurriseur = $postdata['mc_currency'] == 'EUR';
 		$paymentamount_ok = ($postdata['mc_gross'] >= 5.0);
-		
+
 		$postdata['mc_gross_float'] = floatval($postdata['mc_gross']);
 		//$addressiscorrect = $postdata['receiver_email'] == 'seller_1346177012_biz@gulli.com';
 		$addressiscorrect = $postdata['receiver_email'] == 'mastacheata@unitybox.de';
@@ -386,7 +407,7 @@ class Facebook extends CI_Controller {
 			$userid = $postdata['item_name'];
 
 			$this->facebook_model->facebook_update($update, $userid);
-			log_message('debug', 'Paypal User '.$userid.' updated');
+			log_message('info', 'Paypal User '.$userid.' enabled for page posting');
 		}
 		elseif ($transactionOK === false && is_array($postdata) && sizeof($postdata) > 2)
 		{
@@ -489,7 +510,7 @@ class Facebook extends CI_Controller {
 		}
 
 		// record the signed request for debugging purposes
-		log_message('debug', 'Signed Request: '.$signed_request);
+		log_message('debug', 'Facebook-Delete: #'.$this->uuid.'# Signed Request: '.$signed_request);
 
 		// Check signature to originate from facebook (only they know your application secret)
 		if (($data = $this->facebook_api->parse_signedRequest($signed_request)) === NULL)
@@ -501,7 +522,7 @@ class Facebook extends CI_Controller {
 		$this->facebook_model->facebook_delete($data['user_id']);
 
 		// log the success message as informative
-		log_message('info', 'Userid: '.$data['user_id'].' deleted successfully');
+		log_message('info', 'Facebook-Delete: #'.$this->uuid.'# Userid: '.$data['user_id'].' deleted successfully');
 	}
 
 	/**
@@ -520,19 +541,12 @@ class Facebook extends CI_Controller {
 
 	private function _save($userid)
 	{
-		// basic values are required, but this check doesn't take much time
-		if ($this->input->post('basicchanged') === '1')
-		{
-			$basic = array(
-				'songtypes' => implode($this->input->post('songtypes')),
-				'timing' => $this->input->post('timing'),
-				'timing_value' => $this->input->post('timing_value'),
-			);
-		}
-		else
-		{
-			$basic = array();
-		}
+		$basic = array(
+			'songtypes' => implode($this->input->post('songtypes')),
+			'timing' => $this->input->post('timing'),
+			'timing_value' => $this->input->post('timing_value'),
+	        'expires' => $this->facebook_api->get_expiry(),
+		);
 
 		// only store settings from advanced section if any were changed
 		if ($this->input->post('advancedchanged') === '1')
@@ -544,7 +558,6 @@ class Facebook extends CI_Controller {
 				'prefix' => $this->input->post('prefix'),
 				'postfix' => $this->input->post('postfix'),
 				'field_order' => $this->input->post('field_order'),
-			    'expires' => $this->facebook_api->get_expiry(),
 			);
 		}
 		else
@@ -580,6 +593,7 @@ class Facebook extends CI_Controller {
 
 		// merge all the section arrays to one big update array
 		$update = array_merge($basic, $advanced, $website, $artwork);
+		log_message('info', 'Facebook-Settings: #'.$this->uuid.'# Update user '.$userid.' Settings: '.implode(',', $update));
 		$this->facebook_model->facebook_update($update, $userid);
 	}
 

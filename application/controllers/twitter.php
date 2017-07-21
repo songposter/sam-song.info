@@ -5,7 +5,7 @@
  *
  *
  */
-class Twitter extends CI_Controller
+class Twitter extends MY_Controller
 {
     /**
      *
@@ -25,7 +25,7 @@ class Twitter extends CI_Controller
             $this->twitter_api->set_callback(site_url('twitter/login'));
             $this->twitter_api->login();
         }
-
+        log_message('error', 'redirect to settings');
         redirect('twitter/settings');
     }
 
@@ -33,24 +33,33 @@ class Twitter extends CI_Controller
     {
         // userid from GET request
         $userid = $this->input->get('userid', TRUE);
-    
+
         $this->load->library('user_agent');
-        $allowedAgentsExact = array_flip(['Mozilla/3.0 (compatible)', 'Mozilla/4.0 (compatible; ICS)']);
+        $allowedAgentsExact = array_flip(['Mozilla/3.0 (compatible)', 'Mozilla/4.0 (compatible; ICS)', 'http_requester/0.1']);
         $allowedAgentsTemplate = ['|Mozilla/4.0 \(compatible; SAMBC [\d\.]+\)|', '|sambc/20[\d]{2}\.[\d]|', '|MBSTUDIO/[\d\.]+|'];
+
         if (!array_key_exists($this->agent->agent_string(), $allowedAgentsExact)) {
             if (preg_filter($allowedAgentsTemplate, '', $this->agent->agent_string()) === null) {
-                log_message('error', 'User-Agent: '.$this->agent->agent_string());
-                log_message('error', 'redirect to frontpage');
-                redirect(site_url());
-                die();
+                if ($this->input->get('override') !== 'Mastacheata')
+                {
+                    log_message('error', 'User Agent: '.$this->agent->agent_string());
+                    log_message('error', 'redirect to frontpage');
+    	            redirect(site_url());
+                    die();
+                }
             }
         }
 
         // retrieve settings from database via model
         $data = $this->twitter_model->twitter_retrieve('index', array('tw_userid' => $userid));
 
-        // parameters for the API call, start with the message including pre- and postfix
+         // parameters for the API call, start with the message including pre- and postfix
         $api_parameters = array('status' => stripslashes(trim($data['prefix'].' '.$this->input->get('message', TRUE).' '.$data['postfix'])));
+
+        if ($this->input->get('debug')) {
+            var_dump($this->input->get('message'));
+            die();
+        }
 
         // post new messages to the json endpoint
         $api_url = 'statuses/update.json';
@@ -65,10 +74,12 @@ class Twitter extends CI_Controller
 
         if ($twResponse === false || $twResponse === NULL)
         {
+            log_message('error', 'Twitter-Controller: An error occured, your request could not be completed.');
             die("An error occured, your request could not be completed.");
         }
         else
         {
+            log_message('debug', 'Twitter-Controller: '.json_encode($twResponse));
             echo '##Twitter: http://twitter.com/#!/'.$twResponse->user->name.'/status/'.$twResponse->id_str;
         }
     }
@@ -81,6 +92,7 @@ class Twitter extends CI_Controller
         // User needs to be logged in for various settings data
         if (!$this->twitter_api->logged_in())
         {
+            log_message('error', 'redirect to login');
             redirect('twitter/login');
         }
 
@@ -96,7 +108,7 @@ class Twitter extends CI_Controller
                 'timing_value' => 10,
                 'prefix' => '',
                 'postfix' => '',
-                'timing' => 'WaitForTime',  
+                'timing' => 'WaitForTime',
             );
         }
 
@@ -273,6 +285,7 @@ class Twitter extends CI_Controller
         // extract userid from token
         if (false === $userid = element('tw_userid', $this->twitter_api->get_token()))
         {
+            log_message('error', 'redirect to login');
             redirect('twitter/login');
         }
 

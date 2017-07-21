@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Portal extends CI_Controller {
+class Portal extends MY_Controller {
 
     public function __construct() {
         parent::__construct();

@@ -1,10 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Entry extends CI_Controller {
+class Entry extends MY_Controller {
 
 	function __construct()
 	{
-		parent::__construct();
+    	parent::__construct();
+
 		$this->load->helper('url');
 		$this->load->helper('facebook');
 		$this->load->library('twitter_api');
@@ -13,7 +14,7 @@ class Entry extends CI_Controller {
 
 	function index()
 	{
-		// OpenGraph Metadata BEGIN
+	    // OpenGraph Metadata BEGIN
 		$opengraph = 	array(
 							'type'				=> 'website',
 							'title'				=> 'SAM Song Info',
@@ -46,7 +47,8 @@ class Entry extends CI_Controller {
 		if ($this->facebook_api->logged_in())
 			$this->facebook_api->logout();
 
-		redirect(site_url());
+        log_message('error', 'redirect to frontpage');
+        redirect(site_url());
 	}
 }
 /* End of file songinfo.php */

@@ -16,19 +16,23 @@
 			<a class="logout orange" href="/logout">Logout</a>
 			<h1>SAM <span class="orange">Broadcaster</span> Song Info Poster<?php echo (ENVIRONMENT != 'production') ? ' Testing' : ''; ?></h1>
 			<p>
-				Song Info Poster connects your <a href="http://spacialaudio.com/?page=sam-broadcaster&ref=A3773&redirect=SAM_Broadcaster" rel="external" class="hiddenlink" target="_blank">SAM</a> to popular social networks Facebook, Twitter and MySpace.<br />
-				The basic functionality included in both networks is sending messages to either or both platforms,<br />
-				mentioning Artist and Title that just played on your station.
+				SongPoster connects your <a href="https://store.spacial.com/545/cookie?affiliate=27245&redirectto=http%3a%2f%2fspacial.com%2fsam-broadcaster" rel="external" class="hiddenlink" target="_blank">SAM</a> to popular social networks, posting the tracks your station plays.<br />
 			</p>
-			<p>
-				Default features for all networks include standard texts you can attach to the plain Song Info<br />
-				and automatic detection of Ads, Liners etc. which will not be announced to your followers.
-			</p>
-			<p>
-				For Network specific features, registration and settings please see the corresponding section below.
-			</p>
-		</div>
-
+        </div>
+        <div class="section">
+            <h1 class="orange">Relaunch in 2017</h1>
+            <p>
+                Thanks for your interest in this service and the support over the last 7 years since starting this project.<br />
+                After adding more and more features to Facebook over the first years, we had to drop that platform due to policy changes.<br />
+                Now we're glad to announce that Facebook support will return and with Google+ we'll even add another new platform for your stations.<br />
+                <br />
+                We plan to release a new application to the public before the end of this year.<br />
+                This webinterface will be shut down closely thereafter, but we'll keep the posting/PAL API around for some more.<br />
+                <br />
+                If you'd like to be notified when the new site is donw, <a href="http://eepurl.com/bGU2mL" target="_blank" rel="external">sign up here</a> and we'll send you an email when we're ready.<br />
+                In order to keep yourself up-to-date, please check out our <a href="https://www.facebook.com/songposter" target="_blank" rel="external">Facebook</a> and <a href="https://twitter.com/samsonginfo" target="_blank" rel="external">Twitter</a> accounts where we regularly post updates on the relaunch progress.
+            </p>
+        </div>
 		<div class="section">
 			<img src="<?php echo $base?>images/twitter_64.png" />
 			<h2>Twitter</h2>
@@ -41,38 +45,22 @@
 			</a>
 		</div>
 
-		<div class="section">
+<!--		<div class="section">
 			<img src="<?php echo $base?>images/facebook_64.png" />
 			<h2>Facebook</h2>
-			<p>
-				Millions of friends just a click away &mdash; the biggest social network today, even beating ex-leader MySpace.<br />
-				This networks feature set is optionally extended by cover art from SAM's Web Feature (PHP/HTML),<br />
-				a link to your station's homepage including a multilined description of it and a fully customizable Action link.<br />
-				All the possibilities are rounded off with an online settings dialog that remembers your preferences<br />
-				and live preview of how the wall post would look with your current settings.
-			</p>
-
-		<?php if ($facebook_loggedin): ?>
-			<span class="login">
-				<a href="facebook/settings"><img src="<?php echo $base?>images/settings_32.png" /></a>
-				<fb:like class="like"></fb:like>
-			</span>
-		<?php else: ?>
-			<span class="login">
-				<a href="facebook/login"><img src="<?php echo $base?>images/login_32.png" /></a>
-				<fb:facepile class="facepile"></fb:facepile>
-			</span>
-		<?php endif; ?>
-		</div>
-
-		<div id="fb-root"></div>
-		<script src="https://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			FB.init({appId: '<?php echo facebook_app_id()?>', status: true, cookie: true, xfbml: true});
-			FB.Event.subscribe('auth.login', function(response) {
-				window.location.reload();
-			});
-		</script>
-		<script type="text/javascript">$.ready(function () {
-			FB.Canvas.setDoneLoading();
-			});</script>
+            <p>
+                We're really sorry, but facebook will not be available here anymore.<br />
+                At first this was only a technical problem and with enough time it would've probably been possible to return, <br />
+                however facebook changed their rules for developers dramatically over the last few years. <br /> 
+                In fact all automated posting is now forbidden for anyone but large platform partners (which we're not)<br />
+            </p>
+        </div>
+-->
+<div id="fb-root"></div>
+<!-- <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=364278193648166";
+      fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script> -->
