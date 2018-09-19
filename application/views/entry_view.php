@@ -2,22 +2,22 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php echo facebook_xmlns()?>>
-	<head>
-		<title>SAM Song Info Poster<?php echo (ENVIRONMENT != 'production') ? ' Testing' : ''; ?></title>
-		<link rel="stylesheet" type="text/css" href="<?php echo $base?>lib/layout.css" />
-		<link rel="shortcut icon" href="<?php echo $base?>favicon.ico" />
-		<?php if (!empty($opengraph)):?>
-			<?php echo facebook_opengraph_meta($opengraph);?>
-		<?php endif;?>
-	</head>
-	<body>
-		<div class="section">
-			<img src="<?php echo $base?>images/sam_64.png" />
-			<a class="logout orange" href="/logout">Logout</a>
-			<h1>SAM <span class="orange">Broadcaster</span> Song Info Poster<?php echo (ENVIRONMENT != 'production') ? ' Testing' : ''; ?></h1>
-			<p>
-				SongPoster connects your <a href="https://store.spacial.com/545/cookie?affiliate=27245&redirectto=http%3a%2f%2fspacial.com%2fsam-broadcaster" rel="external" class="hiddenlink" target="_blank">SAM</a> to popular social networks, posting the tracks your station plays.<br />
-			</p>
+    <head>
+        <title>SAM Song Info Poster<?php echo (ENVIRONMENT != 'production') ? ' Testing' : ''; ?></title>
+        <link rel="stylesheet" type="text/css" href="<?php echo $base?>lib/layout.css" />
+        <link rel="shortcut icon" href="<?php echo $base?>favicon.ico" />
+        <?php if (!empty($opengraph)):?>
+            <?php echo facebook_opengraph_meta($opengraph);?>
+        <?php endif;?>
+    </head>
+    <body>
+        <div class="section">
+            <img src="<?php echo $base?>images/sam_64.png" />
+            <a class="logout orange" href="/logout">Logout</a>
+            <h1>SAM <span class="orange">Broadcaster</span> Song Info Poster<?php echo (ENVIRONMENT != 'production') ? ' Testing' : ''; ?></h1>
+            <p>
+                SongPoster connects your <a href="https://store.spacial.com/545/cookie?affiliate=27245&redirectto=http%3a%2f%2fspacial.com%2fsam-broadcaster" rel="external" class="hiddenlink" target="_blank">SAM</a> to popular social networks, posting the tracks your station plays.<br />
+            </p>
         </div>
         <div class="section">
             <h1 class="orange">Relaunch in 2017</h1>
@@ -33,21 +33,21 @@
                 In order to keep yourself up-to-date, please check out our <a href="https://www.facebook.com/songposter" target="_blank" rel="external">Facebook</a> and <a href="https://twitter.com/samsonginfo" target="_blank" rel="external">Twitter</a> accounts where we regularly post updates on the relaunch progress.
             </p>
         </div>
-		<div class="section">
-			<img src="<?php echo $base?>images/twitter_64.png" />
-			<h2>Twitter</h2>
-			<p>
-				Brilliant in simplicity &mdash; mere 140 characters that mean the world. <br/>
-				The service supports static text &ldquo;glued&rdquo; to the front and back of the default "Artist - Title" message.
-			</p>
-			<a class="login" href="twitter/<?php echo $twitter_loggedin ? 'settings' : 'login'?>">
-				<img src="<?php echo $base?>images/<?php echo $twitter_loggedin ? 'settings' : 'login'?>_32TW.png" />
-			</a>
-		</div>
+        <div class="section">
+            <img src="<?php echo $base?>images/twitter_64.png" />
+            <h2>Twitter</h2>
+            <p>
+                Brilliant in simplicity &mdash; mere 140 characters that mean the world. <br/>
+                The service supports static text &ldquo;glued&rdquo; to the front and back of the default "Artist - Title" message.
+            </p>
+            <a class="login" href="twitter/<?php echo $twitter_loggedin ? 'settings' : 'login'?>">
+                <img src="<?php echo $base?>images/<?php echo $twitter_loggedin ? 'settings' : 'login'?>_32TW.png" />
+            </a>
+        </div>
 
-<!--		<div class="section">
-			<img src="<?php echo $base?>images/facebook_64.png" />
-			<h2>Facebook</h2>
+<!--        <div class="section">
+            <img src="<?php echo $base?>images/facebook_64.png" />
+            <h2>Facebook</h2>
             <p>
                 We're really sorry, but facebook will not be available here anymore.<br />
                 At first this was only a technical problem and with enough time it would've probably been possible to return, <br />

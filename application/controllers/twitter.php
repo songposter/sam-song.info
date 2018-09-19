@@ -44,7 +44,7 @@ class Twitter extends MY_Controller
                 {
                     log_message('error', 'User Agent: '.$this->agent->agent_string());
                     log_message('error', 'redirect to frontpage');
-    	            redirect(site_url());
+                    redirect(site_url());
                     die();
                 }
             }

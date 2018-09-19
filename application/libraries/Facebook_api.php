@@ -4,10 +4,10 @@
 /**
  * Implementing the Facebook API as a native CI Library
  *
- * @package		CodeIgniter
- * @author		Benedikt Bauer <support@sam-song.info>
- * @copyright	Copyright (c) 2011, Benedikt Bauer
- * @license		http://dev.sam-song.info/license do what the fuck you want to public license v2
+ * @package        CodeIgniter
+ * @author        Benedikt Bauer <support@sam-song.info>
+ * @copyright    Copyright (c) 2011, Benedikt Bauer
+ * @license        http://dev.sam-song.info/license do what the fuck you want to public license v2
  */
 class Facebook_api
 {
@@ -142,9 +142,9 @@ class Facebook_api
         catch (FacebookException $e)
         {
             log_message('debug', 'Get Token failed in _authorize');
-        	log_message('error', $e->getCode().' - '.$e->getMessage());
-        	// start over
-        	$this->login();
+            log_message('error', $e->getCode().' - '.$e->getMessage());
+            // start over
+            $this->login();
         }
 
         $token_array = array();
@@ -309,15 +309,10 @@ class Facebook_api
             $apiURL .= '&'.$paramString;
         }
 
+    curl_setopt($this->_ch, CURLOPT_CAINFO, dirname(__FILE__).'/fb-ca.crt');
         curl_setopt($this->_ch, CURLOPT_URL, $apiURL);
         $response = curl_exec($this->_ch);
 
-        // Error validating Certificate Chain, use bundled CA info
-        if (curl_errno($this->_ch) == CURLE_SSL_CACERT)
-        {
-           curl_setopt($this->_ch, CURLOPT_CAINFO, dirname(__FILE__).'/fb_ca_chain_bundle.crt');
-           $response = curl_exec($this->_ch);
-        }
 
         // cURL Error
         if ($response === false)
@@ -336,12 +331,12 @@ class Facebook_api
         }
         else
         {
-        	if(is_object($decoded_response) && isset($decoded_response->error))
+            if(is_object($decoded_response) && isset($decoded_response->error))
             {
-            	throw new FacebookException($decoded_response->error);
+                throw new FacebookException($decoded_response->error);
             }
 
-        	return $decoded_response;
+            return $decoded_response;
         }
     }
 
@@ -409,17 +404,17 @@ class FacebookException extends Exception
 {
     public function __construct()
     {
-    	if (func_num_args() == 1 && is_object(func_get_arg(0)))
-    	{
-    		$error = func_get_arg(0);
-			$code = substr($error->message, 2, 3);
-			$message = substr($error->message, 6);
-			parent::__construct($message, intval($code));
-    	}
-    	elseif (func_num_args() == 2 && is_string(func_get_arg(0)) && is_numeric(func_get_arg(1)))
-    	{
-    		parent::__construct(func_get_arg(0), func_get_arg(1), NULL);
-    	}
+        if (func_num_args() == 1 && is_object(func_get_arg(0)))
+        {
+            $error = func_get_arg(0);
+            $code = substr($error->message, 2, 3);
+            $message = substr($error->message, 6);
+            parent::__construct($message, intval($code));
+        }
+        elseif (func_num_args() == 2 && is_string(func_get_arg(0)) && is_numeric(func_get_arg(1)))
+        {
+            parent::__construct(func_get_arg(0), func_get_arg(1), NULL);
+        }
     }
 }
 

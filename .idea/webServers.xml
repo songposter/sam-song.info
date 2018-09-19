@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="484d7d71-f87d-44aa-a7bf-9432364315cd" name="SAM-Song.info" url="http://ymoq.de">
+        <fileTransfer host="ymoq.de" port="22" privateKey="C:\Users\benedikt\.ssh\id_rsa" rootFolder="/srv/http/samsonginfo" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

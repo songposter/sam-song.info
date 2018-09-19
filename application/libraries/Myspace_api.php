@@ -60,10 +60,10 @@ class Myspace_api
      */
     public function call($request_method, $uri, array $params = NULL)
     {
-    	$uri = $this->_apiURL.$uri;
+        $uri = $this->_apiURL.$uri;
         $supportedMethods = array
         (
-        	'GET'    => OAUTH_HTTP_METHOD_GET,
+            'GET'    => OAUTH_HTTP_METHOD_GET,
             'POST'   => OAUTH_HTTP_METHOD_POST,
             'PUT'    => OAUTH_HTTP_METHOD_PUT,
             'DELETE' => OAUTH_HTTP_METHOD_DELETE,
@@ -79,12 +79,12 @@ class Myspace_api
             
             if($params === NULL)
             {
-            	$paramString = '';	
+                $paramString = '';    
             }
             else
             {
-            	$paramString = json_encode($params);
-            	log_message('info', 'JSON:'.$paramString);
+                $paramString = json_encode($params);
+                log_message('info', 'JSON:'.$paramString);
             }
             
             $this->_oauth->fetch($uri, $paramString, element(strtoupper($request_method), $supportedMethods));
@@ -153,7 +153,7 @@ class Myspace_api
         {
             $tempTokenStorage = array
             (
-            	'requestToken' => $requestToken['oauth_token'],
+                'requestToken' => $requestToken['oauth_token'],
                 'requestSecret' => $requestToken['oauth_token_secret'],
             );
             $this->_CI->session->set_userdata($tempTokenStorage);

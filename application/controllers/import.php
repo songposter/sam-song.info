@@ -3,13 +3,13 @@
 class import extends CI_Controller {
 
     public function __construct()
-	{
-		parent::__construct();
-	}
-		
-	public function facebook()
-	{
-		$this->load->model('facebook_model');
+    {
+        parent::__construct();
+    }
+        
+    public function facebook()
+    {
+        $this->load->model('facebook_model');
 
 // 8_samsonginfo.facebook
 $facebook = array(
@@ -253,7 +253,7 @@ Conectando tus sentidos','actiontitle'=>'Ahora Suena por http://www.neuronafm.co
   array('userid'=>100001844179416,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|9d781eeb9c1025b969b70f1b-100001844179416|Im0wkvV_AsSOX0U1cnNo346NpTE','expires'=>0,'threshold'=>25,'prefix'=>'','postfix'=>'was just played on xStream-Radio','albumart'=>1,'picturedir'=>'http://www.xstream-radio.net/pictures/','website'=>1,'websitelink'=>'http://www.xstream-radio.net/','websitetitle'=>'xStream-Radio...radio in the xTreme','websitedescription'=>'ROCK ... Pure and Simple ... None of the Hits...all of the Time','actiontitle'=>'Listen Now','actionlink'=>'http://stream.xstream-radio.net:8765/listen.pls','last_update'=>'2011-03-28 17:08:29'),
   array('userid'=>1064105638,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|9cdf5762bbe20ca92c8831c5-1064105638|afDVDXY975c-lObP1YIn5C7OO1s','expires'=>0,'threshold'=>25,'prefix'=>'Presented by Yourstation','postfix'=>'was just played on Yourstation','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.example.com/','websitetitle'=>'Our StationÃƒÂ¯Ã‚Â¿Ã‚Â½s Website','websitedescription'=>'24/7 Top Music just for you','actiontitle'=>'Listen Now','actionlink'=>'http://stream.xstream-radio.net:8765','last_update'=>'2011-04-07 22:49:54'),
   array('userid'=>1098487524,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|4557a5ba28d1b978df4ca05c-1098487524|Q9vwYsOWMJiOYZHHCfIp8IaYJVg','expires'=>0,'threshold'=>25,'prefix'=>'','postfix'=>'was just played on Okemos Brewing Company Intnernet Radio','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>1,'websitelink'=>'http://www.okemosbrewing.com','websitetitle'=>'Okemos Brewing Company Website','websitedescription'=>'Quality rock 24/7 from Okemos, Michigan USA','actiontitle'=>'Listen Now','actionlink'=>'http://loudcity.com/stations/okemos-brewing-company/files/show/listen.html','last_update'=>'2011-03-29 14:17:39'),
-  array('userid'=>1481423426,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|2ed2f8923e10c03286160049-1481423426|XrzpE6zKfr37bGBfl_Znwb-gbXY','expires'=>0,'threshold'=>25,'prefix'=>'WRC is Web Radio Classics','postfix'=>'was just played on Web Radio Classics - WRC','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.webradioclassics.com','websitetitle'=>'Web Radio Classics','websitedescription'=>'The Best Music You Forgot from the late 50s to early 80s','actiontitle'=>'Listen with iTunes or Winamp Now','actionlink'=>'	http://s25.streamerportal.com/tunein.php/gmcclosk/playlist.pls','last_update'=>'2011-03-31 06:41:26'),
+  array('userid'=>1481423426,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|2ed2f8923e10c03286160049-1481423426|XrzpE6zKfr37bGBfl_Znwb-gbXY','expires'=>0,'threshold'=>25,'prefix'=>'WRC is Web Radio Classics','postfix'=>'was just played on Web Radio Classics - WRC','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.webradioclassics.com','websitetitle'=>'Web Radio Classics','websitedescription'=>'The Best Music You Forgot from the late 50s to early 80s','actiontitle'=>'Listen with iTunes or Winamp Now','actionlink'=>'    http://s25.streamerportal.com/tunein.php/gmcclosk/playlist.pls','last_update'=>'2011-03-31 06:41:26'),
   array('userid'=>616975157,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|3ce2bf66c00e0e2c80a1496e.1-616975157|UYTr0xLRoCMeDyvQNpfyHTuzwA4','expires'=>0,'threshold'=>25,'prefix'=>'I\'m DJ Escalus and I\'m playing','postfix'=>'right now on Rogues Radio','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>1,'websitelink'=>'http://www.roguesradio.com','websitetitle'=>'Rogues Radio!','websitedescription'=>'Rogues Radio - For all your gaming music!','actiontitle'=>'Tune in to Rogues Radio!','actionlink'=>'http://cast.sc12.shoutcaststreaming.us/tunein.php/c8052/tunein.pls','last_update'=>'2011-06-23 19:11:26'),
   array('userid'=>1648800092,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|0ff90f799d624b7912b35a68-1648800092|NO7tsq3A7F-7KOmYh5Hi-Uw62C8','expires'=>0,'threshold'=>25,'prefix'=>'Now Playing on FLOW 103:','postfix'=>'(LIVE)','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.flow103.com/','websitetitle'=>'','websitedescription'=>'','actiontitle'=>'Listen Now','actionlink'=>'http://94.100.21.162:8014/listen.pls','last_update'=>'2011-03-29 06:17:45'),
   array('userid'=>1130629517,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|0b710d4b93800db06c4ee0aa-1130629517|-LdfRX5CcSAbxfFIDzlK_HJ_r48','expires'=>0,'threshold'=>25,'prefix'=>'','postfix'=>'','albumart'=>0,'picturedir'=>'','website'=>0,'websitelink'=>'','websitetitle'=>'','websitedescription'=>'','actiontitle'=>'','actionlink'=>'','last_update'=>'2011-03-29 22:22:34'),
@@ -569,14 +569,14 @@ Rock & Roll for Heart & Soul ','actiontitle'=>'Listen Now','actionlink'=>'http:/
   array('userid'=>1286678636,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|94bf873eed8eaa22cf730a8e.1-1286678636|kVhCEf6t_bs3-olOsXyn029RhBI','expires'=>0,'threshold'=>25,'prefix'=>'Stiffteens Radio','postfix'=>'','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.example.com/','websitetitle'=>'Our StationÃƒÂ¯Ã‚Â¿Ã‚Â½s Website','websitedescription'=>'24/7 Top Music just for you','actiontitle'=>'Listen Now','actionlink'=>'http://www.stiffteens.com/','last_update'=>'2011-07-12 13:23:35'),
   array('userid'=>100001195069474,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|e669286d192585d9b52b8099.1-100001195069474|T1m9sri8Hc0AlwBqUrR2-iuSnio','expires'=>0,'threshold'=>25,'prefix'=>'World of House radio','postfix'=>'was just played on Yourstation','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>1,'websitelink'=>'www.worldofhouseradio.com','websitetitle'=>'World of House Radio','websitedescription'=>'24/7 Top Music just for you','actiontitle'=>'Listen Now','actionlink'=>'http://station.voscast.com/4e1336758f8d6/ ','last_update'=>'2011-07-12 11:13:00'),
   array('userid'=>1742612599,'ispage'=>0,'page_token'=>'','access_token'=>'313759027053|c845cb7e6504903983bf3cfc.1-1742612599|z_iQb8IGvHqtfYE6_CF_HWi9yWE','expires'=>0,'threshold'=>25,'prefix'=>'Presented by GameCon Radio','postfix'=>'was just played on Homeroom with Dj Smoochie','albumart'=>0,'picturedir'=>'http://www.example.com/pictures/','website'=>0,'websitelink'=>'http://www.example.com/','websitetitle'=>'Our StationÃ¯Â¿Â½s Website','websitedescription'=>'24/7 Top Music just for you','actiontitle'=>'Listen Now','actionlink'=>'http://127.0.0.1:8000/listen.pls','last_update'=>'2011-07-13 02:28:01')
-);		
-		
+);        
+        
         /*
          *  New table keys
-        	'ID','ispage','use_token','access_token','songtypes','timing','timing_value',
-        	'action_title','action_link','prefix','postfix','field_order','website_title',
-        	'website_link','website_description','picture_dir'
-		*/
+            'ID','ispage','use_token','access_token','songtypes','timing','timing_value',
+            'action_title','action_link','prefix','postfix','field_order','website_title',
+            'website_link','website_description','picture_dir'
+        */
 
         $facebook_new = array();
         
@@ -606,12 +606,12 @@ Rock & Roll for Heart & Soul ','actiontitle'=>'Listen Now','actionlink'=>'http:/
             $this->facebook_model->facebook_update($facebook_new[$idx], $userid);
         }
         echo "Processed ".$idx." entries.";
-	}
-	
-	public function twitter()
-	{
-		$this->load->model('twitter_model');
-		$this->load->library('twitter_api');	    
+    }
+    
+    public function twitter()
+    {
+        $this->load->model('twitter_model');
+        $this->load->library('twitter_api');        
 // 8_samsonginfo.twitter
 $twitter = array(
   array('username'=>'Mastacheata','token'=>'90618799-fpovqBbHNk6pZ4bPvemwawIuVP4kf4SxRDCCdvgvK','secret'=>'lWqpkqjObxueRJrolHoJXJk9W03VEFKef67X0kBgASw','prefix'=>'Prefix','postfix'=>'Postfix','threshold'=>25,'registerdate'=>'2011-01-25 02:17:51'),
@@ -1052,15 +1052,15 @@ $twitter = array(
   array('username'=>'up_247','token'=>'334338624-BkF3GZJusQQ3GQzgCUuQBrmmAEIv1YEY8hkUWNQ0','secret'=>'UWcIcNUVzsNS1iUEREDxbwvB7kQBAvwCEMgVqrJhQT0','prefix'=>'http://www.radio247.nl draait nu ---->','postfix'=>'#nowplaying @up_247','threshold'=>25,'registerdate'=>'2011-07-13 01:12:00'),
   array('username'=>'DANCECLASSIC_EU','token'=>'271580362-CIY46w3n8R5P1V8UDVI9XcOFiFzrSb7uGVueE95m','secret'=>'rhqnNhanMpDJjYhvlToDW6yFmEur8qY6KyUxsqKc0','prefix'=>'Now Playing:','postfix'=>'Next Track:','threshold'=>25,'registerdate'=>'2011-07-13 17:11:06')
 );
-		
-		
+        
+        
         /*
          *  New table keys
-        	'ID', 'token', 'secret', 'screenname', 'timing', 'timing_value',
-        	'prefix', 'postfix', 'songtypes'
-		*/
+            'ID', 'token', 'secret', 'screenname', 'timing', 'timing_value',
+            'prefix', 'postfix', 'songtypes'
+        */
         
-	    $twitter_new = array();
+        $twitter_new = array();
         
         foreach ($twitter as $idx => $user)
         {
@@ -1078,8 +1078,8 @@ $twitter = array(
             
             $retrieve = elements(array
             (
-            	'tw_userid',
-            	'tw_token',
+                'tw_userid',
+                'tw_token',
                 'tw_secret',
                 'tw_screenname',
             ), $twitter_new[$idx]);
@@ -1096,13 +1096,13 @@ $twitter = array(
 
             $keys = array
             (
-            	'ID',
-            	'token',
-            	'secret',
-            	'screenname',
-            	'timing',
-            	'timing_value',
-        		'prefix',
+                'ID',
+                'token',
+                'secret',
+                'screenname',
+                'timing',
+                'timing_value',
+                'prefix',
                 'postfix',
                 'songtypes',
             );
@@ -1110,5 +1110,5 @@ $twitter = array(
             $this->twitter_model->twitter_update(array_combine($keys, $twitter_new[$idx]), $twitter_new[$idx]['tw_userid']);
         }       
         echo "Processed ".$idx." entries.";
-	}
+    }
 }

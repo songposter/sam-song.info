@@ -14,7 +14,7 @@ class Twitter_api
      */
     public function __construct($api = '')
     {
-    	$this->_CI =& get_instance();
+        $this->_CI =& get_instance();
         $this->_CI->load->library('session');
         $this->_CI->load->config('twitter');
         $this->_CI->load->helper('url');
@@ -23,16 +23,16 @@ class Twitter_api
         $consumer_secret = $this->_CI->config->item('twitter_consumer_secret');
         $this->_apiURL = $this->_CI->config->item('twitter_'.$api.'api_url');
 
-		if(class_exists('OAuth')) {
-        	$this->_oauth = new OAuth($consumer_key, $consumer_secret);
-        } else { 
-	        $this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
-	        $this->_oauth = $this->_CI->oauth_api;
-	        define('OAUTH_HTTP_METHOD_GET',		'GET');
-	        define('OAUTH_HTTP_METHOD_POST',	'POST');
-	        define('OAUTH_HTTP_METHOD_PUT',		'PUT');
-	        define('OAUTH_HTTP_METHOD_DELETE',	'DELETE');
-	        define('OAUTH_HTTP_METHOD_HEAD',	'HEAD');	        
+        if(class_exists('OAuth')) {
+            $this->_oauth = new OAuth($consumer_key, $consumer_secret);
+        } else {
+            $this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
+            $this->_oauth = $this->_CI->oauth_api;
+            define('OAUTH_HTTP_METHOD_GET',        'GET');
+            define('OAUTH_HTTP_METHOD_POST',    'POST');
+            define('OAUTH_HTTP_METHOD_PUT',        'PUT');
+            define('OAUTH_HTTP_METHOD_DELETE',    'DELETE');
+            define('OAUTH_HTTP_METHOD_HEAD',    'HEAD');
         }
 
         $this->_oauth->debug = true;
@@ -137,10 +137,11 @@ class Twitter_api
      */
     public function call($request_method, $uri, array $params = NULL)
     {
-        $uri = $this->_apiURL.$uri;
+        $uri = $this->_apiURL.'1.1/'.$uri;
+
         $supportedMethods = array
         (
-        	'GET'    => OAUTH_HTTP_METHOD_GET,
+            'GET'    => OAUTH_HTTP_METHOD_GET,
             'POST'   => OAUTH_HTTP_METHOD_POST,
             'PUT'    => OAUTH_HTTP_METHOD_PUT,
             'DELETE' => OAUTH_HTTP_METHOD_DELETE,
@@ -161,28 +162,35 @@ class Twitter_api
             // Duplicate entry => Only log for debug
             if ($oEx->getMessage() === "Invalid auth/bad request (got a 403, expected HTTP/1.1 20X or a redirect)")
             {
-                log_message('debug', 'duplicate message for user '.$this->_token['tw_screenname']);
+                log_message('error', 'Twitter-API: duplicate message for user '.$this->_token['tw_screenname']);
                 return false;
             }
-            // different oauth/API related error, put into error_log
+            // different oauth/API related debug, put into debug_log
             else
             {
-                log_message('error', 'User: '.$this->_token['tw_screenname']."\n".$oEx->getMessage());
-                log_message('debug', $oEx->debugInfo);
-                log_message('debug', $oEx->lastResponse);
+                log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']."\t".$oEx->getMessage());
+                log_message('error', 'Twitter-API: '.$oEx->debugInfo);
+                log_message('error', 'Twitter-API: '.$oEx->lastResponse);
                 return false;
             }
         }
         // Everything fine, just decode json into stdObject
         $response = json_decode($this->_oauth->getLastResponse());
-                
-        if (property_exists($response, 'user')) {
-        	return $response;
-        } elseif (property_exists($response, 'error')) {
-        	log_message('error', 'User: '.$this->_token['tw_screenname']."\n".$response->error);
-        	log_message('debug', $response->request);
-        	log_message('debug', $this->_oauth->getLastResponseInfo());
-        	return false;
+
+        if ($response === null)
+        {
+            log_message('error', 'Twitter-API: Response was NULL');
+            return false;
+        }
+        elseif (property_exists($response, 'user'))
+        {
+            return $response;
+        }
+        elseif (property_exists($response, 'debugs'))
+        {
+            log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->debugs[0]->message);
+            log_message('error', 'Twitter-API: '.print_r($this->_oauth->getLastResponseInfo(), true));
+            return false;
         }
     }
 
@@ -192,35 +200,37 @@ class Twitter_api
      */
     private function _authorize()
     {
-    	$requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
+        $requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
         try
         {
             $requestToken = $this->_oauth->getRequestToken($requestURL, $this->_callback);
         }
         catch (Exception $e)
         {
-            log_message('error', 'Error getting Request Token: '.$e->getMessage);
-            log_message('debug', $e->debugInfo);
-            log_message('debug', $e->lastResponse);
+            log_message('debug', 'Twitter-API: debug getting Request Token: '.$e->getMessage);
+            log_message('debug', 'Twitter-API: '.$e->debugInfo);
+            log_message('debug', 'Twitter-API: '.$e->lastResponse);
         }
+
 
 
         if ($requestToken !== false && is_array($requestToken))
         {
             $tempTokenStorage = array
             (
-            	'requestToken' => $requestToken['oauth_token'],
+                'requestToken' => $requestToken['oauth_token'],
                 'requestSecret' => $requestToken['oauth_token_secret'],
             );
             $this->_CI->session->set_userdata($tempTokenStorage);
 
             $authorizeURL = $this->_apiURL.$this->_CI->config->item('twitter_authorize_url');
+
             // redirect to authorize
             redirect($authorizeURL.'?oauth_token='.$requestToken['oauth_token']);
         }
         else
         {
-            log_message('error', 'Got no request token from endpoint');
+            log_message('debug', 'Twitter-API: Got no request token from endpoint');
         }
     }
 
@@ -233,10 +243,10 @@ class Twitter_api
     {
         $requestToken = ($this->_CI->session->userdata('requestToken') !== $requestToken) ? false : $requestToken;
         $requestSecret = $this->_CI->session->userdata('requestSecret');
-
+        
         if ($requestToken === false || $requestSecret === false)
         {
-            log_message('error', 'Request token/secret missing');
+            log_message('debug', 'Twitter-API: Request token/secret missing');
         }
         else
         {
@@ -249,12 +259,12 @@ class Twitter_api
             catch (Exception $e)
             {
                 var_dump($e);
-            	log_message('error', 'Error in access token exchange: '.$e->getMessage());
-                log_message('debug', $e->debugInfo);
-                log_message('debug', $e->lastResponse);
+                log_message('debug', 'Twitter-API: debug in access token exchange: '.$e->getMessage());
+                log_message('debug', 'Twitter-API: '.$e->debugInfo);
+                log_message('debug', 'Twitter-API: '.$e->lastResponse);
                 die();
             }
-
+    
             if ($accessToken !== false && is_array($accessToken))
             {
                 $this->_CI->session->unset_userdata(array('requestToken', 'requestSecret'));
@@ -272,7 +282,7 @@ class Twitter_api
             }
             else
             {
-                log_message('error', 'Missing access token response');
+                log_message('debug', 'Twitter-API: Missing access token response');
             }
         }
     }
