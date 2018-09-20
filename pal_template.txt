@@ -122,7 +122,7 @@ BEGIN
   status := URLEncode(status);
   picture := URLEncode(picture);
 
-  getStr := 'http://dev.sam-song.info//**FB_TWEET**//'
+  getStr := 'http://sam-song.info//**FB_TWEET**//'
     + '?message=' + status + '&userid=/**USER_ID**/'
     /**PICTURE**/;
 
