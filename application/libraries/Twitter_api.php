@@ -205,14 +205,13 @@ class Twitter_api
         {
             $requestToken = $this->_oauth->getRequestToken($requestURL, $this->_callback);
         }
-        catch (Exception $e)
+        catch (MyOAuthException $e)
         {
-            log_message('debug', 'Twitter-API: debug getting Request Token: '.$e->getMessage);
-            log_message('debug', 'Twitter-API: '.$e->debugInfo);
+            log_message('debug', 'Twitter-API: debug getting Request Token: '.$e->getMessage());
+            log_message('debug', $e->debugInfo);
             log_message('debug', 'Twitter-API: '.$e->lastResponse);
+            redirect(site_url());
         }
-
-
 
         if ($requestToken !== false && is_array($requestToken))
         {
