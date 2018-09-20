@@ -208,9 +208,9 @@ class Twitter_api
         catch (MyOAuthException $e)
         {
             log_message('debug', 'Twitter-API: debug getting Request Token: '.$e->getMessage());
-            log_message('debug', 'Twitter-API: '.$e->debugInfo);
+            log_message('debug', $e->debugInfo);
             log_message('debug', 'Twitter-API: '.$e->lastResponse);
-            return false;
+            redirect(site_url());
         }
 
         if ($requestToken !== false && is_array($requestToken))
