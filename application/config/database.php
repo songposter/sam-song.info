@@ -41,14 +41,14 @@
 $active_group = ENVIRONMENT;
 $active_record = TRUE;
 
-$db['production']['hostname'] = 'db';
-$db['production']['username'] = 'samsonginfo';
+$db['production']['hostname'] = $_ENV['DB_HOST'];
+$db['production']['username'] = $_ENV['MYSQL_USER'];
 $db['production']['password'] = $_ENV['MYSQL_PASSWORD'];
-$db['production']['database'] = 'samsonginfo';
+$db['production']['database'] = $_ENV['MYSQL_DATABASE'];
 $db['production']['dbdriver'] = 'mysqli';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;
-$db['production']['db_debug'] = TRUE;
+$db['production']['db_debug'] = FALSE;
 $db['production']['cache_on'] = FALSE;
 $db['production']['cachedir'] = '';
 $db['production']['char_set'] = 'utf8';
@@ -59,14 +59,14 @@ $db['production']['stricton'] = FALSE;
 
 
 // Development DB
-$db['development']['hostname'] = 'db';
-$db['development']['username'] = 'samsonginfo';
+$db['development']['hostname'] = $_ENV['DB_HOST'];
+$db['development']['username'] = $_ENV['MYSQL_USER'];
 $db['development']['password'] = $_ENV['MYSQL_PASSWORD'];
-$db['development']['database'] = 'samsonginfo';
+$db['development']['database'] = $_ENV['MYSQL_DATABASE'];
 $db['development']['dbdriver'] = 'mysqli';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
-$db['development']['db_debug'] = FALSE;
+$db['development']['db_debug'] = TRUE;
 $db['development']['cache_on'] = FALSE;
 $db['development']['cachedir'] = '';
 $db['development']['char_set'] = 'utf8';
