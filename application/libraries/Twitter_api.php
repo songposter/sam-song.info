@@ -137,7 +137,7 @@ class Twitter_api
      */
     public function call($request_method, $uri, array $params = NULL)
     {
-        $uri = $this->_apiURL.'1.1/'.$uri;
+        $uri = $this->_apiURL.$uri;
 
         $supportedMethods = array
         (
@@ -186,9 +186,9 @@ class Twitter_api
         {
             return $response;
         }
-        elseif (property_exists($response, 'debugs'))
+        elseif (property_exists($response, 'errors'))
         {
-            log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->debugs[0]->message);
+            log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->errors[0]->message);
             log_message('error', 'Twitter-API: '.print_r($this->_oauth->getLastResponseInfo(), true));
             return false;
         }
