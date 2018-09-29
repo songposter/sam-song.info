@@ -28,10 +28,10 @@ class Twitter_api
         } else {
             $this->_CI->load->library('oauth_api', array($consumer_key, $consumer_secret));
             $this->_oauth = $this->_CI->oauth_api;
-            define('OAUTH_HTTP_METHOD_GET',        'GET');
+            define('OAUTH_HTTP_METHOD_GET',     'GET');
             define('OAUTH_HTTP_METHOD_POST',    'POST');
-            define('OAUTH_HTTP_METHOD_PUT',        'PUT');
-            define('OAUTH_HTTP_METHOD_DELETE',    'DELETE');
+            define('OAUTH_HTTP_METHOD_PUT',     'PUT');
+            define('OAUTH_HTTP_METHOD_DELETE',  'DELETE');
             define('OAUTH_HTTP_METHOD_HEAD',    'HEAD');
         }
 
@@ -200,7 +200,7 @@ class Twitter_api
      */
     private function _authorize()
     {
-        $requestURL = $this->_apiURL.$this->_CI->config->item('twitter_request_url');
+        $requestURL = $this->_CI->config->item('twitter_request_url');
         try
         {
             $requestToken = $this->_oauth->getRequestToken($requestURL, $this->_callback);
@@ -222,7 +222,7 @@ class Twitter_api
             );
             $this->_CI->session->set_userdata($tempTokenStorage);
 
-            $authorizeURL = $this->_apiURL.$this->_CI->config->item('twitter_authorize_url');
+            $authorizeURL = $this->_CI->config->item('twitter_authorize_url');
 
             // redirect to authorize
             redirect($authorizeURL.'?oauth_token='.$requestToken['oauth_token']);
@@ -250,7 +250,7 @@ class Twitter_api
         else
         {
             $this->_oauth->setToken($requestToken, $requestSecret);
-            $accessURL = $this->_apiURL.$this->_CI->config->item('twitter_access_url');
+            $accessURL = $this->_CI->config->item('twitter_access_url');
             try
             {
                 $accessToken = $this->_oauth->getAccessToken($accessURL, '', $requestVerifier);
