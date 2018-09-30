@@ -162,15 +162,13 @@ class Twitter_api
             // Duplicate entry => Only log for debug
             if ($oEx->getMessage() === "Invalid auth/bad request (got a 403, expected HTTP/1.1 20X or a redirect)")
             {
-                log_message('error', 'Twitter-API: duplicate message for user '.$this->_token['tw_screenname']);
+                log_message('debug', 'Twitter-API: duplicate message for user '.$this->_token['tw_screenname']);
                 return false;
             }
             // different oauth/API related debug, put into debug_log
             else
             {
-                log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']."\t".$oEx->getMessage());
-                log_message('error', 'Twitter-API: '.$oEx->debugInfo);
-                log_message('error', 'Twitter-API: '.$oEx->lastResponse);
+                log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']."\nMessage: ".$oEx->getMessage()."\nDebugInfo: ".$oEx->debugInfo."\nLast Response: ".$oEx->lastResponse);
                 return false;
             }
         }
@@ -188,8 +186,9 @@ class Twitter_api
         }
         elseif (property_exists($response, 'errors'))
         {
-            log_message('error', 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->errors[0]->message);
-            log_message('error', 'Twitter-API: '.print_r($this->_oauth->getLastResponseInfo(), true));
+            $log_level = 'error';
+            if ($response->errors[0]->message == 'Status is a duplicate.') $log_level = 'debug';
+            log_message($log_level, 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->errors[0]->message."\n".print_r($this->_oauth->getLastResponseInfo(), true));
             return false;
         }
     }

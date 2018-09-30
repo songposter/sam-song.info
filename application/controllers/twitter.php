@@ -74,7 +74,7 @@ class Twitter extends MY_Controller
 
         if ($twResponse === false || $twResponse === NULL)
         {
-            log_message('error', 'Twitter-Controller: An error occured, your request could not be completed.');
+            log_message('error', 'Twitter-Controller: No response from Twitter.');
             die("An error occured, your request could not be completed.");
         }
         else
@@ -92,7 +92,7 @@ class Twitter extends MY_Controller
         // User needs to be logged in for various settings data
         if (!$this->twitter_api->logged_in())
         {
-            log_message('error', 'redirect to login');
+            log_message('debug', 'Settings: User not logged in');
             redirect('twitter/login');
         }
 
@@ -285,7 +285,7 @@ class Twitter extends MY_Controller
         // extract userid from token
         if (false === $userid = element('tw_userid', $this->twitter_api->get_token()))
         {
-            log_message('error', 'redirect to login');
+            log_message('error', 'Session expired when trying to download PAL');
             redirect('twitter/login');
         }
 
