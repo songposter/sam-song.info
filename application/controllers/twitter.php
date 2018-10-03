@@ -32,7 +32,7 @@ class Twitter extends MY_Controller
     public function index()
     {
         // userid from GET request
-        $userid = $this->input->get('userid', TRUE);
+        $userid = $this->input->get_post('userid', TRUE);
 
         $this->load->library('user_agent');
         $allowedAgentsExact = array_flip(['Mozilla/3.0 (compatible)', 'Mozilla/4.0 (compatible; ICS)', 'http_requester/0.1']);
@@ -40,7 +40,7 @@ class Twitter extends MY_Controller
 
         if (!array_key_exists($this->agent->agent_string(), $allowedAgentsExact)) {
             if (preg_filter($allowedAgentsTemplate, '', $this->agent->agent_string()) === null) {
-                if ($this->input->get('override') !== 'Mastacheata')
+                if ($this->input->get_post('override') !== 'Mastacheata')
                 {
                     log_message('error', 'User Agent: '.$this->agent->agent_string());
                     log_message('error', 'redirect to frontpage');
@@ -54,10 +54,10 @@ class Twitter extends MY_Controller
         $data = $this->twitter_model->twitter_retrieve('index', array('tw_userid' => $userid));
 
          // parameters for the API call, start with the message including pre- and postfix
-        $api_parameters = array('status' => stripslashes(trim($data['prefix'].' '.$this->input->get('message', TRUE).' '.$data['postfix'])));
+        $api_parameters = array('status' => stripslashes(trim($data['prefix'].' '.$this->input->get_post('message', TRUE).' '.$data['postfix'])));
 
-        if ($this->input->get('debug')) {
-            var_dump($this->input->get('message'));
+        if ($this->input->get_post('debug')) {
+            var_dump($this->input->get_post('message'));
             die();
         }
 
