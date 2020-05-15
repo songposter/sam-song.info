@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="29a61789-2a81-4bb1-9a0b-fbdd3b5ff127" name="Default" comment="Ignore and idea files">
+    <list default="true" id="29a61789-2a81-4bb1-9a0b-fbdd3b5ff127" name="Default" comment="Change a bunch of log levels">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/default/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/default/facebook.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/default/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/default/twitter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/development/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/development/facebook.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/development/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/development/twitter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/production/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/facebook.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/production/facebook_production.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/facebook_production.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/production/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/twitter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/testing/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/facebook.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/testing/myspace.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/myspace.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/config/testing/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/twitter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controllers/entry.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/entry.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controllers/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/twitter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/libraries/Twitter_api.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/Twitter_api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/entry_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/entry_view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/footer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +31,18 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -60,7 +58,7 @@
       <workItem from="1530049485199" duration="5000" />
       <workItem from="1537309410044" duration="2030000" />
       <workItem from="1537472323964" duration="7000000" />
-      <workItem from="1589574156099" duration="2234000" />
+      <workItem from="1589574156099" duration="2439000" />
     </task>
     <task id="LOCAL-00001" summary="Fix tabs vs spaces">
       <created>1537340795766</created>
@@ -111,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589574963076</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Change a bunch of log levels">
+      <created>1589576460011</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1589576460011</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,14 +144,15 @@
     <MESSAGE value="Fix error handling" />
     <MESSAGE value="Reorganize Oauth API, use bundled CA if available" />
     <MESSAGE value="Ignore and idea files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ignore and idea files" />
+    <MESSAGE value="Change a bunch of log levels" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change a bunch of log levels" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="663" y="64" key="CommitChangelistDialog2" timestamp="1589574962375">
+    <state x="663" y="64" key="CommitChangelistDialog2" timestamp="1589576459290">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="663" y="64" key="CommitChangelistDialog2/-2048.0.2048.1112/0.0.2048.1112@0.0.2048.1112" timestamp="1589574962375" />
+    <state x="663" y="64" key="CommitChangelistDialog2/-2048.0.2048.1112/0.0.2048.1112@0.0.2048.1112" timestamp="1589576459290" />
     <state x="99" y="106" key="MergeDialog" timestamp="1589574917719">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
