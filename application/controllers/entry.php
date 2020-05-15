@@ -7,6 +7,7 @@ class Entry extends CI_Controller {
         parent::__construct();
 
         $this->load->helper('url');
+        $this->load->helper('facebook');
         $this->load->library('twitter_api');
     }
 
