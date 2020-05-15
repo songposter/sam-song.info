@@ -162,7 +162,7 @@ class Twitter_api
             // Duplicate entry => Only log for debug
             if ($oEx->getMessage() === "Invalid auth/bad request (got a 403, expected HTTP/1.1 20X or a redirect)")
             {
-                log_message('debug', 'Twitter-API: duplicate message for user '.$this->_token['tw_screenname']);
+                log_message('info', 'Twitter-API: duplicate message for user '.$this->_token['tw_screenname']);
                 return false;
             }
             // different oauth/API related debug, put into debug_log
@@ -187,7 +187,7 @@ class Twitter_api
         elseif (property_exists($response, 'errors'))
         {
             $log_level = 'error';
-            if ($response->errors[0]->message == 'Status is a duplicate.') $log_level = 'debug';
+            if ($response->errors[0]->message == 'Status is a duplicate.') $log_level = 'info';
             log_message($log_level, 'Twitter-API: User: '.$this->_token['tw_screenname']." : ".$response->errors[0]->message."\n".print_r($this->_oauth->getLastResponseInfo(), true));
             return false;
         }
@@ -206,9 +206,9 @@ class Twitter_api
         }
         catch (MyOAuthException $e)
         {
-            log_message('debug', 'Twitter-API: debug getting Request Token: '.$e->getMessage());
-            log_message('debug', $e->debugInfo);
-            log_message('debug', 'Twitter-API: '.$e->lastResponse);
+            log_message('info', 'Twitter-API: debug getting Request Token: '.$e->getMessage());
+            log_message('info', $e->debugInfo);
+            log_message('info', 'Twitter-API: '.$e->lastResponse);
             redirect(site_url());
         }
 
@@ -228,7 +228,8 @@ class Twitter_api
         }
         else
         {
-            log_message('debug', 'Twitter-API: Got no request token from endpoint');
+            log_message('error', 'Twitter-API: Got no request token from endpoint');
+            die('Twitter-API: Got no request token from endpoint');
         }
     }
 
@@ -244,7 +245,8 @@ class Twitter_api
         
         if ($requestToken === false || $requestSecret === false)
         {
-            log_message('debug', 'Twitter-API: Request token/secret missing');
+            log_message('error', 'Twitter-API: Request token/secret missing');
+            die('Twitter-API: Request token/secret missing');
         }
         else
         {
@@ -256,11 +258,10 @@ class Twitter_api
             }
             catch (Exception $e)
             {
-                var_dump($e);
-                log_message('debug', 'Twitter-API: debug in access token exchange: '.$e->getMessage());
-                log_message('debug', 'Twitter-API: '.$e->debugInfo);
-                log_message('debug', 'Twitter-API: '.$e->lastResponse);
-                die();
+                log_message('error', 'Twitter-API: debug in access token exchange: '.$e->getMessage());
+                log_message('info', 'Twitter-API: '.$e->debugInfo);
+                log_message('info', 'Twitter-API: '.$e->lastResponse);
+                die('Twitter-API: debug in access token exchange: '.$e->getMessage());
             }
     
             if ($accessToken !== false && is_array($accessToken))
@@ -280,7 +281,8 @@ class Twitter_api
             }
             else
             {
-                log_message('debug', 'Twitter-API: Missing access token response');
+                log_message('error', 'Twitter-API: Missing access token response');
+                die('Twitter-API: Missing access token response');
             }
         }
     }

@@ -5,7 +5,7 @@
  *
  *
  */
-class Twitter extends MY_Controller
+class Twitter extends CI_Controller
 {
     /**
      *
@@ -57,7 +57,9 @@ class Twitter extends MY_Controller
         $api_parameters = array('status' => stripslashes(trim($data['prefix'].' '.$this->input->get_post('message', TRUE).' '.$data['postfix'])));
 
         if ($this->input->get_post('debug')) {
+            echo '<pre>';
             var_dump($this->input->get_post('message'));
+            echo '</pre>';
             die();
         }
 
@@ -79,8 +81,8 @@ class Twitter extends MY_Controller
         }
         else
         {
-            log_message('debug', 'Twitter-Controller: '.json_encode($twResponse));
-            echo '##Twitter: http://twitter.com/#!/'.$twResponse->user->name.'/status/'.$twResponse->id_str;
+            log_message('info', 'Twitter-Controller: '.json_encode($twResponse));
+            die('##Twitter: http://twitter.com/#!/'.$twResponse->user->name.'/status/'.$twResponse->id_str);
         }
     }
 
@@ -92,7 +94,7 @@ class Twitter extends MY_Controller
         // User needs to be logged in for various settings data
         if (!$this->twitter_api->logged_in())
         {
-            log_message('debug', 'Settings: User not logged in');
+            log_message('info', 'Settings: User not logged in');
             redirect('twitter/login');
         }
 

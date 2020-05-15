@@ -20,9 +20,9 @@
             </p>
         </div>
         <div class="section">
-            <h1 class="orange">Relaunch in 2017</h1>
+            <h1 class="orange">Relaunch when I have time</h1>
             <p>
-                Thanks for your interest in this service and the support over the last 7 years since starting this project.<br />
+                Thanks for your interest in this service and the support over the last <?php echo $years?> years since starting this project.<br />
                 After adding more and more features to Facebook over the first years, we had to drop that platform due to policy changes.<br />
                 Now we're glad to announce that Facebook support will return and with Google+ we'll even add another new platform for your stations.<br />
                 <br />
@@ -30,7 +30,7 @@
                 This webinterface will be shut down closely thereafter, but we'll keep the posting/PAL API around for some more.<br />
                 <br />
                 If you'd like to be notified when the new site is donw, <a href="http://eepurl.com/bGU2mL" target="_blank" rel="external">sign up here</a> and we'll send you an email when we're ready.<br />
-                In order to keep yourself up-to-date, please check out our <a href="https://www.facebook.com/songposter" target="_blank" rel="external">Facebook</a> and <a href="https://twitter.com/samsonginfo" target="_blank" rel="external">Twitter</a> accounts where we regularly post updates on the relaunch progress.
+                In order to keep yourself up-to-date, please check out our <a href="https://twitter.com/samsonginfo" target="_blank" rel="external">Twitter</a> accounts where we post updates on the relaunch progress.
             </p>
         </div>
         <div class="section">
@@ -44,8 +44,7 @@
                 <img src="<?php echo $base?>images/<?php echo $twitter_loggedin ? 'settings' : 'login'?>_32TW.png" />
             </a>
         </div>
-
-<!--        <div class="section">
+        <div class="section">
             <img src="<?php echo $base?>images/facebook_64.png" />
             <h2>Facebook</h2>
             <p>
@@ -55,12 +54,3 @@
                 In fact all automated posting is now forbidden for anyone but large platform partners (which we're not)<br />
             </p>
         </div>
--->
-<div id="fb-root"></div>
-<!-- <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=364278193648166";
-      fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script> -->

@@ -1,15 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Entry extends MY_Controller {
+class Entry extends CI_Controller {
 
     function __construct()
     {
         parent::__construct();
 
         $this->load->helper('url');
-        $this->load->helper('facebook');
         $this->load->library('twitter_api');
-        $this->load->library('facebook_api');
     }
 
     function index()
@@ -29,9 +27,9 @@ class Entry extends MY_Controller {
 
         // Check for login and hand over base_url
         $data = array(
-                    'facebook_loggedin' => $this->facebook_api->logged_in(),
-                    'twitter_loggedin'    => $this->twitter_api->logged_in(),
+                    'twitter_loggedin'     => $this->twitter_api->logged_in(),
                     'base'                 => $this->config->item('base_url'),
+                    'years'                => (new DateTime('2010-02-20'))->diff(new DateTime())->format('%y')
                 );
 
         // Ready => Display View
@@ -43,9 +41,6 @@ class Entry extends MY_Controller {
     {
         if ($this->twitter_api->logged_in())
             $this->twitter_api->logout();
-
-        if ($this->facebook_api->logged_in())
-            $this->facebook_api->logout();
 
         log_message('error', 'redirect to frontpage');
         redirect(site_url());

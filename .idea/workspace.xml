@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="29a61789-2a81-4bb1-9a0b-fbdd3b5ff127" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/benedikt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/samsong.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scssLintPlugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/config/syslog.php" afterDir="false" />
+    <list default="true" id="29a61789-2a81-4bb1-9a0b-fbdd3b5ff127" name="Default" comment="Ignore and idea files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/default/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/default/facebook.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/default/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/default/twitter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/development/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/development/facebook.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/development/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/development/twitter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/production/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/facebook.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/production/facebook_production.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/facebook_production.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/production/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/production/twitter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/testing/facebook.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/facebook.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/testing/myspace.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/myspace.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/testing/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/testing/twitter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/entry.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/entry.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/twitter.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/twitter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/libraries/Twitter_api.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/Twitter_api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/entry_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/entry_view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,38 +28,6 @@
     <execution>
       <executable />
     </execution>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>getRe</find>
-      <find>\t</find>
-      <find>$config</find>
-      <find>CI_CORE</find>
-      <find>$this-&gt;config</find>
-      <find>\$this-&gt;_CI-&gt;load-&gt;[\w]+\('(.+)'\);</find>
-      <find>array</find>
-      <find>element</find>
-      <find>oauth_token</find>
-      <find>myOauthExcep</find>
-      <find>$oae</find>
-      <find>dirname(__FILE__).'/ca-bundle.crt'</find>
-      <find>CURLOPT</find>
-      <find>CURLOPT_CAINFO</find>
-      <find>$result = curl_exec($ch);</find>
-      <find>(if \(.*\))\n\s+\{</find>
-      <find>ca-bundle.crt</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-      <replace>\$this-&gt;$1 = $0</replace>
-      <replace>$1 {</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>D:\Dropbox\devel\github\songposter\sam-song.info</dir>
-      <dir>D:\Dropbox\devel\github\songposter\sam-song.info\system\core</dir>
-      <dir>D:\Dropbox\devel\github\songposter\sam-song.info\application\config</dir>
-      <dir>D:\Dropbox\devel\github\songposter\sam-song.info\application</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +60,7 @@
       <workItem from="1530049485199" duration="5000" />
       <workItem from="1537309410044" duration="2030000" />
       <workItem from="1537472323964" duration="7000000" />
-      <workItem from="1589574156099" duration="795000" />
+      <workItem from="1589574156099" duration="2234000" />
     </task>
     <task id="LOCAL-00001" summary="Fix tabs vs spaces">
       <created>1537340795766</created>
@@ -129,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537478691680</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Ignore and idea files">
+      <created>1589574963076</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1589574963076</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,14 +138,23 @@
     <MESSAGE value="Fix getMessage()" />
     <MESSAGE value="Fix error handling" />
     <MESSAGE value="Reorganize Oauth API, use bundled CA if available" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganize Oauth API, use bundled CA if available" />
+    <MESSAGE value="Ignore and idea files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ignore and idea files" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="663" y="64" key="CommitChangelistDialog2" timestamp="1589574962375">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="663" y="64" key="CommitChangelistDialog2/-2048.0.2048.1112/0.0.2048.1112@0.0.2048.1112" timestamp="1589574962375" />
     <state x="99" y="106" key="MergeDialog" timestamp="1589574917719">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="99" y="106" key="MergeDialog/-2048.0.2048.1112/0.0.2048.1112@0.0.2048.1112" timestamp="1589574917719" />
+    <state x="616" y="285" key="Vcs.Push.Dialog.v2" timestamp="1589574964648">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="616" y="285" key="Vcs.Push.Dialog.v2/-2048.0.2048.1112/0.0.2048.1112@0.0.2048.1112" timestamp="1589574964648" />
     <state x="831" y="468" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589574160952">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
